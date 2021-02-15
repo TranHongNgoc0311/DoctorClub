@@ -1,0 +1,67 @@
+﻿@model DoctorClub.Models.DataModels.Feedback
+@{
+    ViewBag.Title = "Feedback";
+    Layout = "~/Views/Shared/_LayoutForum.cshtml";
+}
+@section css{
+    <style>
+        .appointment-form .form-control {
+            border: transparent !important;
+            border-bottom: 1px solid rgb(0, 0, 0,.2) !important;
+            padding-left: 0;
+            padding-right: 0;
+            background: transparent !important;
+            border-radius: 0;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+        }
+
+        .appointment {
+            padding: 7% 12% 7% 5% !important;
+            width: 100%;
+        }
+
+        .mb-3 {
+            margin-bottom: 1rem !important;
+            line-height: 1.4;
+            font-weight: 400;
+            font-family: "Josefin Sans",Arial,sans-serif;
+        }
+    </style>
+}
+
+<div class="container-wrap box-shadow" style="background: rgba(255, 255, 255,0.4);margin-top: 15px;">
+    <div class="row no-gutters d-md-flex align-items-center">
+        <div class="appointment ftco-animate">
+            <h3 class="mb-3">Send feedback to the administrator</h3>
+            @using (Html.BeginForm("Feedback", "Home", FormMethod.Post, new { @class = "appointment-form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @placeholder = "My feedback title is..." } })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control", @placeholder = "Feedback Content in here...", @cols = "30", @rows = "5" } })
+                    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <button class="action_btn btn_small_two">Send Feedback<i class="fa fa-send"></i></button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @if (ViewBag.success != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '<strong class="text-success">Success!</strong>',
+                text: 'Your feedback has been sent to the administrator successfully'
+            });
+        </script>
+    }
+}

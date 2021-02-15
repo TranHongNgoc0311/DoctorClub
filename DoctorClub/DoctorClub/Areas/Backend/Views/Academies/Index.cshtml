@@ -1,0 +1,122 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<DoctorClub.Models.DataModels.Academies>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Backend/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-body table-responsive">
+        <div class="row">
+            <div class="col-md-6">
+                <b style="font-size:25px"> Academies Active</b>
+            </div>
+            <div class="col-md-6">
+                <form method="get" action="@Url.Action("Index","Academies")" class="form-inline">
+                    <div class="form-group">
+                        <label for="exampleInputEmail2">Search : </label>
+                        @Html.TextBox("strSearching", ViewBag.CurrentFilter as string)
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Search</button>
+
+                </form>
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Academies", new { id = item.Id })"><button class="btn btn-sm btn-primary">Edit</button></a>
+                        <button class="btn btn-sm btn-danger" onclick="delete_Academies('@item.Id')">Delete</button>
+                        <button class="btn btn-sm btn-warning" onclick="hinden_Academies('@item.Id')">Hindden</button>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount   @Html.PagedListPager(Model, pageno => Url.Action("Index", new { pageno, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>
+<script>
+    function delete_Academies(id) {
+        Swal.fire({
+            title: 'Do you want to delete this Academies ?',
+            text: "Permanently delete this Academies and permanently lose data !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete Academies !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Admin/Academies/DeleteConfirmed/' + id,
+                    success: function (data) {
+                        if (data) {
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'You have successfully deleted!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                        }
+                    }
+                });
+            }
+        });
+    }
+    function hinden_Academies(id) {
+        Swal.fire({
+            title: 'Do you want to hidden this Academies ?',
+            text: "This Academies board and data remains the same !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, hidden Academies !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Admin/Academies/Hidden/' + id,
+                    success: function (data) {
+                        if (data) {
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'You have successfully hindden!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>

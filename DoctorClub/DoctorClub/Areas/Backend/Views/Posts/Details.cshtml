@@ -1,0 +1,56 @@
+﻿    @model DoctorClub.Models.DataModels.Posts
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Backend/Views/Shared/_Layout.cshtml";
+}
+
+
+<br />
+<div class="post">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <p class="panel-title"><b>Category : </b>@Html.DisplayFor(model => model.SubCategories.Name)</p>
+        </div>
+        <div class="panel-body">
+            <div class="post">
+                <div class="user-block">
+                    <img class="img-circle img-bordered-sm" src="~/Content/Upload/@Model.User.Image" alt="user image">
+                    <span class="username">
+                        <a href="@Url.Action("Details","Users",new { id=Model.User.Id })"> @Model.User.Name</a>
+                    </span>
+                    <span class="description">@Model.Created</span>
+                </div>
+                <br />
+                <!-- /.user-block -->
+                <p>
+                    @Html.Raw(HttpUtility.HtmlDecode(Model.Content))
+                </p>
+
+            </div>
+        </div>
+    </div>
+    <div class="user-block">
+        <h4>
+            All Comments
+        </h4>
+        @foreach (var comment in Model.Comments.Where(x => x.PostId == Model.Id && x.ParrentId == null))
+        {
+            <div class="row container-fluid">
+                <a href="@Url.Action("Details","Users",new { id=comment.User.Id })"><b>@comment.User.Name : </b></a> @comment.Content
+                <div class="m-5">
+                    <ul>
+                        @foreach (var child in Model.Comments.Where(x => x.ParrentId != null && x.ParrentId.Equals(comment.Id)))
+                        {
+                            <li>
+                                <a href="@Url.Action("Details","Users",new { id=comment.User.Id })"><b>@child.User.Name : </b></a>
+                                @child.Content
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

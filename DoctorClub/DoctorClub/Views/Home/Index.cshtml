@@ -1,0 +1,303 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    var people = ViewBag.people as IEnumerable<DoctorClub.Models.DataModels.Users>;
+    var topic = ViewBag.topic as IEnumerable<DoctorClub.Models.DataModels.SubCategories>;
+    var category = ViewBag.category as IEnumerable<DoctorClub.Models.DataModels.Categories>;
+    var post = ViewBag.post as IEnumerable<DoctorClub.Models.DataModels.Posts>;
+    var comment = ViewBag.comment as IEnumerable<DoctorClub.Models.DataModels.Comments>;
+    var tag = ViewBag.tags as IEnumerable<DoctorClub.Models.DataModels.Tags>;
+}
+
+<section class="docly-banner-support">
+    <div class="banner-content text-center">
+        <div class="banner-content-wrapper">
+            <h1 class="banner-title wow fadeInUp">DoctorClub Support Communities</h1>
+            <p class="banner-description wow fadeInUp" data-wow-delay="0.3s">
+                Find answers, ask questions, and connect with our community of DoctorClub users<br> from around the
+                world.
+            </p>
+            <!-- /.banner-search-form-wrapper -->
+        </div>
+        <!-- /.banner-content-wrapper -->
+    </div>
+    <!-- /.banner-content -->
+    <ul class="people-image wow fadeIn" data-wow-delay="0.7s">
+        @{
+            var e = 0;
+            for (var i = 0; i < 10; i++)
+            {
+                <li><img class="wow zoomIn" data-wow-delay="0.4s" src="~/Content/Upload/@people.ElementAt(i < people.Count()?i:e).Image" style="max-width: 130px;max-height: 130px;min-height: 50px;min-width:50px;" alt="people"></li>
+                if (i >= people.Count())
+                {
+                    e++;
+                }
+                if (e >= people.Count())
+                {
+                    e = 0;
+                }
+            }
+        }
+    </ul>
+    <ul class="partical-animation wow fadeIn" data-wow-delay="0.9s">
+        <li class="partical">
+            <img data-parallax='{"x": -180, "y": 80, "rotateY":2000}' src="~/Content/img/home_support/bnp1.png" alt="partical">
+        </li>
+        <li class="partical"></li>
+        <li class="partical"></li>
+        <li class="partical"></li>
+        <li class="partical"></li>
+        <li class="partical"></li>
+        <li class="partical"></li>
+        <li class="partical"></li>
+        <li class="partical"></li>
+        <li class="partical"></li>
+        <li class="partical"></li>
+        <li class="partical"><img src="~/Content/img/home_support/bnp2.png" data-parallax='{"x": -250, "y": -160, "rotateZ":200}' alt="partical"></li>
+    </ul>
+    <div class="bottom-shape">
+        <img src="~/Content/img/home_support/banner-bottom-shape.png" alt="banner">
+    </div>
+</section>
+<!-- /.docly-banner-support -->
+
+
+<section class="doc_categories_guide_area sec_pad">
+    <img class="shap wow fadeInUp" src="~/Content/img/home_one/dow_bg_two.png" alt="">
+    <div class="container">
+        <div class="section_title text-center">
+            <h2 class="h_title wow fadeInUp">Check out our guide categories</h2>
+            <p class="wow fadeInUp" data-wow-delay="0.2s">Some dodgy chav bevvy amongst argy-bargy spiffing absolutely bladdered nancy boy cup of tea a load of old tosh porkies.</p>
+        </div>
+        <div class="row">
+            @{
+                var count = 1;
+                foreach (var cat in category)
+                {
+                    var img = count + ".png";
+                    count++;
+                    if(count > 6)
+                    {
+                        count = 1;
+                    }
+                    <div class="col-lg-4 col-sm-6">
+                        <div class="categories_guide_item wow fadeInUp">
+                            <img src="~/Content/img/onepage-icon/@img" alt="">
+                            <div class="doc_tag_title">
+                                <h4>@cat.Name</h4>
+                            </div>
+                            <ul class="list-unstyled tag_list">
+                                @foreach (var tp in cat.SubCategories)
+                                {
+                                    <li><a href="@Url.Action("Index","Posts",new { slug = tp.Slug})"><i class="icon_document_alt"></i>@tp.Name</a></li>
+                                }
+                            </ul>
+                            <a href="@Url.Action("Forum","Home")" class="doc_border_btn">More<i class="arrow_right"></i></a>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div class="text-center">
+            <a href="@Url.Action("Forum","Home")" class="doc_border_btn all_doc_btn wow fadeinUp">View All Docs<i class="arrow_right"></i></a>
+        </div>
+    </div>
+</section>
+
+<section class="funfact-area">
+    <div class="container">
+        <div class="smile has-animation">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="260px"
+                 height="260px" xml:space="preserve">
+            <path stroke-linecap="round" class="path" fill="none" stroke="#fbe1db" stroke-linecap="round"
+                  stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"
+                  d="M100.000,200.000 C44.860,200.000 -0.000,155.139 -0.000,100.000 C-0.000,44.860 44.860,-0.001 100.000,-0.001 C155.141,-0.001 200.000,44.860 200.000,100.000 C200.000,155.139 155.140,200.000 100.000,200.000 ZM160.496,34.528 C144.586,19.816 123.327,10.811 100.000,10.811 C50.821,10.811 10.811,50.821 10.811,100.000 C10.811,114.898 14.488,128.952 20.975,141.310 C25.233,149.424 30.703,156.808 37.146,163.216 C53.281,179.259 75.502,189.188 100.000,189.188 C149.179,189.188 189.189,149.178 189.189,100.000 C189.189,86.241 186.056,73.201 180.468,61.553 C175.556,51.315 168.745,42.155 160.496,34.528 ZM99.809,155.403 C97.481,155.403 95.146,155.272 92.807,155.002 C74.591,152.901 57.749,142.414 47.755,126.949 L56.835,121.081 C65.094,133.861 79.004,142.528 94.047,144.262 C113.349,146.489 132.625,137.389 143.164,121.081 L152.245,126.949 C140.768,144.708 120.724,155.403 99.809,155.403 ZM134.235,88.513 C128.265,88.513 123.424,83.673 123.424,77.702 C123.424,71.731 128.265,66.891 134.235,66.891 C140.206,66.891 145.047,71.731 145.047,77.702 C145.047,83.673 140.206,88.513 134.235,88.513 ZM67.343,88.513 C61.372,88.513 56.532,83.673 56.532,77.702 C56.532,71.731 61.372,66.891 67.343,66.891 C73.313,66.891 78.154,71.731 78.154,77.702 C78.154,83.673 73.313,88.513 67.343,88.513 Z" />
+
+
+
+                    </svg>
+        </div>
+        <!-- /.smile -->
+
+        <div class="section_title text-center">
+            <h2 class="h_title wow fadeInUp">
+                Over 1200+<br>
+                completed work & Still counting.
+            </h2>
+        </div>
+
+        <div class="funfact-boxes">
+            <div class="funfact-box text-center color-one wow fadeInRight" data-wow-delay="0.3s">
+                <div class="fanfact-icon">
+                    <img src="~/Content/img/home_support/fun-fact-1.png" alt="funfact">
+                </div>
+                <div class="counter">@people.Count()</div>
+                <h3 class="title">Users</h3>
+            </div>
+            <!-- /.funfact-box -->
+
+            <div class="funfact-box text-center color-two wow fadeInRight" data-wow-delay="0.5s">
+                <div class="fanfact-icon">
+                    <img src="~/Content/img/home_support/fun-fact-2.png" alt="funfact">
+                </div>
+                <div class="counter">@topic.Count()</div>
+                <h3 class="title">Topics</h3>
+            </div>
+            <!-- /.funfact-box text-center -->
+
+            <div class="funfact-box text-center color-three wow fadeInRight" data-wow-delay="0.7s">
+                <div class="fanfact-icon">
+                    <img src="~/Content/img/home_support/fun-fact-3.png" alt="funfact">
+                </div>
+                <div class="counter">@post.Count()</div>
+                <h3 class="title">Posts</h3>
+            </div>
+            <!-- /.funfact-box text-center -->
+
+            <div class="funfact-box text-center color-four wow fadeInRight" data-wow-delay="0.9s">
+                <div class="fanfact-icon">
+                    <img src="~/Content/img/home_support/fun-fact-4.png" alt="funfact">
+                </div>
+                <div class="counter">@comment.Count()</div>
+                <h3 class="title">Replies</h3>
+            </div>
+            <!-- /.funfact-box text-center -->
+
+            <div class="funfact-box text-center color-five wow fadeInRight" data-wow-delay="1.1s">
+                <div class="fanfact-icon">
+                    <img src="~/Content/img/home_support/fun-fact-5.png" alt="funfact">
+                </div>
+                <div class="counter">@tag.Count()</div>
+                <h3 class="title">Tags</h3>
+            </div>
+            <!-- /.funfact-box text-center -->
+        </div>
+        <!-- /.fun-fact-boxes -->
+    </div>
+    <!-- /.container -->
+</section>
+<!-- /.funfact-area -->
+
+<section class="community-posts-area">
+    <div class="container">
+        <div class="section_title text-center">
+            <h2 class="h_title wow fadeInUp">
+                DoctorClub top topic posts
+            </h2>
+
+            <p class="wow fadeInUp" data-wow-delay="0.3s">
+                I hope you will find your anwser here.!
+            </p>
+        </div>
+
+        <div class="community-posts-wrapper">
+            @foreach (var p in post)
+            {
+                <div class="community-post wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="post-content">
+                        <div class="author-avatar">
+                            <img src="~/Content/Upload/@p.User.Image" style="width:50px;height: 50px;" alt="community post">
+                        </div>
+                        <div class="entry-content">
+                            <h3 class="post-title">
+                                <a href="@Url.Action("Details","Posts",new { slug = p.Slug})">
+                                   @p.Title
+                                </a>
+                            </h3>
+                            <p>posted by: @p.Created</p>
+                        </div>
+                    </div>
+                    <div class="post-meta-wrapper">
+                        <ul class="post-meta-info">
+                            <li><a href="#"><i class="fas fa-eye"></i>@p.Views</a></li>
+                            <li><a href="#"><i class="icon_chat_alt"></i>@p.Comments.Count()</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.community-post -->
+            }
+
+        </div>
+        <!-- /.community-posts-wrapper -->
+
+        <div class="button-container text-center">
+            <a href="@Url.Action("Forum","Home")" class="doc_border_btn btn-round border-light all_doc_btn wow fadeInUp animated">
+                All sestems currently operational
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="11px">
+                    <path fill-rule="evenodd" fill="rgb(16, 179, 214)" d="M13.034,0.006 L12.323,0.738 L15.227,4.980 L-0.000,4.981 L-0.000,6.015 L15.227,6.015 L12.323,10.258 L13.034,10.990 L18.000,5.864 L18.000,5.131 L13.034,0.006 Z" />
+                </svg>
+            </a>
+        </div>
+        <!-- /.button-container -->
+    </div>
+    <!-- /.container -->
+</section>
+<!-- /.community-posts-area -->
+
+
+<section class="about-journalism">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7 md-order-two">
+                <div class="journalism-content-wrapper">
+                    <div class="quote wow fadeIn">
+                        <img src="~/Content/img/home_support/quote-top.png" alt="quote">
+                    </div>
+                    <h2 class="journalism-title wow fadeInUp" data-wow-delay="0.3s">
+                        Docly cares deeply<br>
+                        about journalism.
+                    </h2>
+
+                    <p class="description wow fadeInUp" data-wow-delay="0.5s">
+                        Cheeky why my good sir nancy boy off his nut at public school
+                        excuse my French well bog bugger porkies, eaton he legged it
+                        owt to do with me gutted.!
+                    </p>
+
+                    <div class="journalism-info wow fadeInUp" data-wow-delay="0.3s">
+                        <h3 class="name">Chaplain Mondover</h3>
+                        <span class="designation">CEO, DoctorClub</span>
+                    </div>
+
+                    <div class="quote dmt-4 wow fadeIn" data-wow-delay="1s">
+                        <img src="~/Content/img/home_support/quote-bottom.png" alt="quote">
+                    </div>
+
+                </div>
+                <!-- /.journalism-content-wrapper -->
+            </div>
+            <!-- /.col-md-6 -->
+
+            <div class="col-lg-5">
+                <div class="journalism-feature-image wow fadeInRight" data-wow-delay="0.3s">
+                    <img src="~/Content/img/signup/female-doctor.png" alt="journalism">
+                </div>
+                <!-- /.journalism-feature-image -->
+            </div>
+            <!-- /.col-md-6 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+
+    <div class="light-header">
+        <h2 class="title-light wow fadeInDown" data-wow-delay="0.4s">OUR COMMITMENT</h2>
+    </div>
+</section>
+<!-- /.about-journalism -->
+
+<section class="communities">
+    <div class="container">
+        <div class="section_title title-img text-center">
+
+            <img src="~/Content/img/home_support/com_sm.png" alt="community">
+
+            <h2 class="title-lg wow fadeInUp">
+                New to Communities?
+            </h2>
+
+            <a href="@Url.Action("Login","Users")" class="action_btn wow fadeInUp" data-wow-delay="0.3s">Join the community <i class="arrow_right"></i></a>
+        </div>
+    </div>
+    <!-- /.container -->
+</section>
+<!-- /.communities -->

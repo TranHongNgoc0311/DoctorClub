@@ -1,0 +1,313 @@
+﻿@model DoctorClub.Models.DataModels.Users
+
+@{
+    ViewBag.Title = "Setting";
+    Layout = "~/Views/Shared/_LayoutForum.cshtml";
+}
+@section css{
+    <link href="~/Content/css/class_responsive.css" rel="stylesheet" />
+}
+@section style{
+    <style>
+        .spe-table span {
+            display: block;
+            color: #767676;
+            font-size: 14px;
+        }
+    </style>
+}
+<div class="row" style="margin-top: 20px;">
+    <div class="container-fluid">
+        <div class="shortcode_info">
+            <div class="toggle_shortcode">
+                <a class="toggle_btn" data-toggle="collapse" href="#IGeneral" role="button" aria-expanded="false" aria-controls="IGeneral">General information</a>
+                <div class="collapse multi-collapse show" id="IGeneral">
+                    <div class="card card-body toggle_body">
+
+                        <table class="table table-striped xs-text sm-text">
+                            <tbody>
+                                <tr>
+                                    <td class="hidden-xs hidden-ms">Name:</td>
+                                    <td>@Model.Name</td>
+                                    <td>
+                                        <a href="@Url.Action("GIEdit","Setting",new{ type = 1})">Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="hidden-xs hidden-ms">Username:</td>
+                                    <td>@Model.Username</td>
+                                    <td>
+                                        <a href="@Url.Action("GIEdit","Setting",new{ type = 2})">Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="hidden-xs hidden-ms">Birthday:</td>
+                                    <td>@Model.Birthday.ToString("MM/dd/yyyy")</td>
+                                    <td>
+                                        <a href="@Url.Action("GIEdit","Setting",new{ type = 3})">Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="hidden-xs hidden-ms">Email:</td>
+                                    <td>@Model.Email</td>
+                                    <td>
+                                        <a href="@Url.Action("GIEdit","Setting",new{ type = 4})">Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="hidden-xs hidden-ms">Phone:</td>
+                                    <td>@Model.Phone</td>
+                                    <td>
+                                        <a href="@Url.Action("GIEdit","Setting",new{ type = 5})">Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="hidden-xs hidden-ms">Address:</td>
+                                    <td>@Model.Address</td>
+                                    <td>
+                                        <a href="@Url.Action("GIEdit","Setting",new{ type = 6})">Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="hidden-xs hidden-ms">Introdution:</td>
+                                    <td>
+                                        @Model.Introdution.Substring(0, 45) @(Model.Introdution.Length > 45?"...":"")
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("GIEdit","Setting",new{ type = 7})">Edit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="hidden-xs hidden-ms">Avatar:</td>
+                                    <td>
+                                        <a style="text-decoration: underline" href="~/Content/Upload/@Model.Image" target="_blank">@Model.Username</a>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.Action("GIEdit","Setting",new{ type = 8})">Edit</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <a class="toggle_btn mt-1 collapsed" data-toggle="collapse" href="#ISecurity" role="button" aria-expanded="false" aria-controls="ISecurity">Privacy and security</a>
+                <div class="collapse multi-collapse" id="ISecurity">
+                    <div class="card card-body toggle_body">
+                        <div class="doc_rightsidebar" style="position: static;padding:0;margin:0;width: auto;border: none;display: flex;flex-wrap: nowrap;justify-content: space-between;">
+                            <b class="title-userBox xs-text sm-text">Private your account:</b>
+                            <div class="private_option" style="padding-bottom: 10px;">
+                                <label for="private" class="tab-btn private"><i class="icon_lock-open"></i></label>
+                                <input type="checkbox" name="private" id="private_option" class="tab_switcher" @(Model.Private ? "checked" : "")>
+                                <label for="private" class="tab-btn"><i class="icon_lock"></i></label>
+                            </div>
+                        </div>
+                        <hr class="dashed">
+                        <div class="box box-primary">
+                            <div class="box-body box-profile">
+                                <p class="title-userBox">
+                                    <b>Change password:</b>
+                                </p>
+
+                                @using (Html.BeginForm("Change_password", "Setting", FormMethod.Post, new { @id = "change_password" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" name="current_password" placeholder="your current password">
+                                    </div>
+                                    <hr class="dashed">
+                                    <div class="form-group">
+                                        <input type="password" id="password" class="form-control" name="password" placeholder="Your new Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" name="Confirm_passord" placeholder="Confirm your new passord">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="action_btn btn_small" id="change_password_button">Change</button>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a class="toggle_btn mt-1 collapsed" data-toggle="collapse" href="#IEducation" role="button" aria-expanded="false" aria-controls="IEducation">Education</a>
+                <div class="collapse multi-collapse" id="IEducation">
+                    <div class="card card-body toggle_body">
+                        <div class="p-2" style="display: flex;justify-content:flex-end">
+                            <a href="@Url.Action("EduEdit","Setting")" class="doc_border_btn btn_small">Add</a>
+                        </div>
+                        <table class="table table-striped xs-text sm-text">
+                            <tbody>
+                                @foreach (var ua in Model.UserAcademies)
+                                {
+                                    <tr>
+                                        <td><a href="~/Content/Upload/@ua.Image" target="_blank">@ua.Academy.Name (@ua.From - @ua.To)</a></td>
+                                        <td>
+                                            <a href="@Url.Action("EduEdit","Setting",new{ id = ua.id})">Edit</a> |
+                                            <a href="#" onclick="deleteAcademy('@ua.id')">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <a class="toggle_btn mt-1 collapsed" data-toggle="collapse" href="#IAward" role="button" aria-expanded="false" aria-controls="IAward">Awards and Recognitions</a>
+                <div class="collapse multi-collapse" id="IAward">
+                    <div class="card card-body toggle_body">
+                        <div class="p-2" style="display: flex;justify-content:flex-end">
+                            <a href="#" data-toggle="modal" data-target="#awardModal"  class="doc_border_btn btn_small">Add</a>
+                        </div>
+                        @{
+
+                        }
+                        <table class="table table-striped xs-text sm-text">
+                            <tbody>
+                                @{
+                                    if (Model.Awards != null)
+                                    {
+                                        var award = Model.Awards.Split(',').ToList();
+                                        foreach (var aw in award)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <small>@aw</small>
+                                                </td>
+                                                <td>
+                                                    <a href="#" onclick="deleteAward('@aw')">Delete</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <a class="toggle_btn mt-1 collapsed" data-toggle="collapse" href="#ISpecialization" role="button" aria-expanded="false" aria-controls="ISpecialization">Specialization and experience</a>
+                <div class="collapse multi-collapse" id="ISpecialization">
+                    <div class="card card-body toggle_body">
+                        <div class="p-2" style="display: flex;justify-content:flex-end">
+                            <a href="@Url.Action("SAEEdit","Setting")" class="doc_border_btn btn_small">Add</a>
+                        </div>
+                        <table class="table table-striped xs-text sm-text spe-table">
+                            <tbody>
+                                @foreach (var us in Model.UserSpecializations)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span>@us.Specialization.Name</span>
+                                            <span><i class="fa fa-building-o"></i> @us.Place</span>
+                                            <span><i class="fa fa-briefcase"></i>@us.position</span>
+                                        </td>
+                                        <td>
+                                            @us.From - @us.To
+                                        </td>
+                                        <td>
+                                            <a href="@Url.Action("SAEEdit","Setting",new{ id = us.id})">Edit</a> |
+                                            <a href="#" onclick="deleteSpecialization('@us.id')">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade img_modal" id="awardModal" tabindex="-3" role="dialog" aria-hidden="false">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i class=" icon_close"></i>
+    </button>
+    <div class="modal-dialog help_form" role="document">
+        <div class="modal-content">
+            <div class="shortcode_title">
+                <h1>Add new award</h1>
+            </div>
+            @using (Html.BeginForm("addAward", "Setting", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <input type="text" name="award" class="form-control" placeholder="Your award, enter here...">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn action_btn">Add</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+            $('#awardModal').find('form').on('submit', function (e) {
+                e.preventDefault();
+                var award = $('#awardModal').find('input[name=award]').val();
+
+                if (award.length < 3) {
+                    errorAlert('Award field can not be empty.');
+                } else {
+                    e.target.submit();
+                }
+            });
+        });
+
+        function deleteAcademy(uaId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/Setting/deleteUserAcademy?id=' + uaId;
+                }
+            });
+        }
+        function deleteSpecialization(usId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/Setting/deleteUserSpecialization?id=' + usId;
+                }
+            });
+        }
+
+        function deleteAward(award) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/Setting/deleteAward?award=' + award;
+                }
+            });
+        }
+    </script>
+    @if (ViewBag.messageAler != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '<strong class="text-success">Success!</strong>',
+                text: 'The data is updated successfully.'
+            });
+        </script>
+    }
+}

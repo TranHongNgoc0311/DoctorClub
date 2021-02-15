@@ -1,0 +1,125 @@
+﻿@model IEnumerable<DoctorClub.Models.DataModels.Posts>
+
+@if (Model.Count() > 0)
+{
+    <div class="community-posts-wrapper bb-radius">
+        @foreach (var item in Model)
+        {
+            <div class="community-post style-two feature docly spider richard">
+                <div class="post-content">
+                    <div class="author-avatar">
+                        <img src="~/Content/Upload/@item.User.Image" alt="community post">
+                    </div>
+                    <div class="entry-content">
+                        <h3 class="post-title">
+                            <a href="@Url.Action("Details","Posts",new { slug = item.Slug})">
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </a>
+                        </h3>
+                        <ul class="meta">
+                            <li>
+                                @{
+                                    var content = Html.Raw(HttpUtility.HtmlDecode(item.Content));
+                                }
+                                <a href="@Url.Action("Details","Posts",new { slug = item.Slug})">
+                                    @System.Text.RegularExpressions.Regex.Replace(content.ToHtmlString(), "<.*?>", String.Empty).ToString().Substring(0, 49)
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="meta">
+                            <li>
+                                <i class="icon_pencil"></i>Posted: @Html.DisplayFor(modelItem => item.Created)
+                            </li>
+                            <li>
+                                <i class="icon_calendar"></i>updated: @Html.DisplayFor(modelItem => item.Updated)
+                            </li>
+                        </ul>
+                        <ul class="meta">
+                            <li>
+                                <i class="icon_tags"></i>Tags:
+                                @{
+                                    var i = 0;
+                                    foreach (var t in item.PostTags)
+                                    {
+                                        i++;
+                                        <a href="@Url.Action("Index","Tags",new { slug = t.Tag.Slug})">@t.Tag.Name</a>
+                                        if (i < item.PostTags.Count())
+                                        {
+                                            <span style="margin-right: 2px;">,</span>
+                                        }
+                                    }
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="post-meta-wrapper">
+                    <ul class="post-meta-info">
+                        <li><a href="#"><i class="icon_chat_alt"></i>@item.Comments.Count()</a></li>
+                        <li><a href="#"><i class="fa fa-eye"></i>@item.Views</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.community-post style-two -->
+        }
+        <div class="pagination-wrapper">
+            <ul class="post-pagination">
+                @{
+                    int position;
+                    int pageCurrent = ViewBag.pageCurrent;
+                    float numSize = ViewBag.numSize;
+                    var dot = "...";
+                    if (numSize > 1)
+                    {
+                        <li class="prev-post @(pageCurrent>1?"":"pegi-disable")">
+                            <a onclick="PostPagination(@(pageCurrent-1),@ViewBag.subcat,null)"><i class="arrow_carrot-left"></i></a>
+                        </li>
+                        for (position = 1; position <= numSize; position++)
+                        {
+
+                            if (position == pageCurrent)
+                            {
+
+                                <li><a onclick="PostPagination(@position,@ViewBag.subcat,null)" class="active">@position</a></li>
+                            }
+
+                            else
+                            {
+                                if (position == 1 || position >= pageCurrent - 1 && position < pageCurrent || position == numSize || position > pageCurrent && position <= pageCurrent + 1)
+                                {
+                                    <li><a onclick="PostPagination(@position,@ViewBag.subcat,null)">@position</a></li>
+                                }
+                                else
+                                {
+                                    <li>@dot</li>
+                                    dot = "";
+                                }
+                            }
+
+                        }
+                        <li class="next-post @(pageCurrent > 0 && pageCurrent < numSize?"":"pegi-disable")">
+                            <a onclick="PostPagination(@(pageCurrent+1),@ViewBag.subcat,null)"><i class="arrow_carrot-right"></i></a>
+                        </li>
+                    }
+
+                }
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+
+    <div class="error_area bg_color">
+        <div class="error_dot one"></div>
+        <div class="error_dot two"></div>
+        <div class="error_dot three"></div>
+        <div class="error_dot four"></div>
+        <div class="container">
+            <div class="error_content_two text-center sec_pad">
+                <h2 style="color: #000000!important;">Oop... We can't find what you are looking for.</h2>
+                <p>Sorry for the inconvenience. There are not thing here, please turn back or <br>@Html.ActionLink("back to home page", "Forum", "Home").</p>
+            </div>
+        </div>
+    </div>
+}

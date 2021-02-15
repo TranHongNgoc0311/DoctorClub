@@ -1,0 +1,188 @@
+﻿
+@{
+    Layout = null;
+    var specialization = ViewBag.specialization as IEnumerable<DoctorClub.Models.DataModels.Specializations>;
+    var academies = ViewBag.academy as IEnumerable<DoctorClub.Models.DataModels.Academies>;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="~/Content/img/logo.ico" type="image/x-icon">
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/slick/slick.css" rel="stylesheet" />
+    <link href="~/Content/assets/slick/slick-theme.css" rel="stylesheet" />
+    <!-- icon css-->
+    <link href="~/Content/assets/elagent-icon/style.css" rel="stylesheet" />
+    <link href="~/Content/assets/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/Content/assets/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/animation/animate.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <link href="~/Content/css/main.css" rel="stylesheet" />
+    <link href="~/Content/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/assets/select2-4.0.10/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/css/search.css" rel="stylesheet" />
+    <link href="~/Content/css/component.css" rel="stylesheet" />
+    <link href="~/Content/css/validate-style.css" rel="stylesheet" />
+    <title>Update user information</title>
+</head>
+<style>
+    .section_title p{
+        color: #000000;
+    }
+    .select2-selection {
+        border: 0!important;
+        color: #555555;
+        outline: 0;
+        min-height: 38px;
+        margin-bottom: 10px;
+        text-align: left;
+    }
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        padding: 5px;
+    }
+    .select2-selection__arrow {
+        margin: 5px;
+    }
+    .error {
+        color: red;
+        font-size: 14px;
+    }
+</style>
+<body data-scroll-animation="true" style=" background: url(../Content/img/red_cross.png) no-repeat fixed center; background-size: cover;">
+    <div id="preloader">
+        <div id="ctn-preloader" class="ctn-preloader">
+            <div class="round_spinner">
+                <div class="spinner"></div>
+                <div class="text">
+                    <img src="~/Content/img/spinner_logo.png?ver1" alt="">
+                    <h4><span>Doctor</span>Club</h4>
+                </div>
+            </div>
+            <h2 class="head">Did You Know?</h2>
+            <p></p>
+        </div>
+    </div>
+    <section class="doc_categories_guide_area sec_pad">
+        <div class="container">
+            <div class="row">
+                <div class="container-fluid">
+                    <div class="categories_guide_item wow fadeInUp">
+                        <div class="section_title text-center">
+                            <h2 class="h_title wow fadeInUp">Update information</h2>
+                            <p class="wow fadeInUp" data-wow-delay="0.2s">Let us know more about you!</p>
+                            <p class="wow fadeInUp" data-wow-delay="0.2s">Please complete the requirements below.</p>
+                        </div>
+                        <div class="doc_tag_title">
+                            @using (Html.BeginForm("FirstTimeLogin", "Users", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class=" form-group panel bg-1">
+                                    <h5>About you:</h5>
+                                    <textarea name="introdution" class="form-control" rows="3" placeholder="My introdution is..."></textarea>
+                                    <br />
+                                    <select name="award" multiple></select>
+                                </div>
+                                <div class=" form-group panel bg-1" id="academy_panel">
+                                    <h5>Education:</h5>
+                                    <div class="row" id="first_box">
+
+                                        <div class="col-lg-5">
+                                            <select name="Academy" class="form-control select2_ac" required="required">
+                                                @{
+                                                    if (academies != null)
+                                                    {
+                                                        foreach (var ac in academies)
+                                                        {
+                                                            <option value="@ac.Name">@ac.Name</option>
+                                                        }
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" name="From" placeholder="From year ...">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input type="number" class="form-control" name="to" placeholder="To year ...">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="file-label">
+                                                        <input type="file" name="image" class="inputfile inputfile-1" />
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Your college degree</span>
+                                                    </label>
+                                                    <div id="errorImg"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="dashed">
+                                <div class=" form-group panel">
+                                    <h5 style="margin: 30px 0 15px 0;">Specialization</h5>
+                                    <div class="row">
+                                        <div class="col-lg-5">
+                                            <label for=""><b>Specialization</b></label>
+                                            <p>
+                                                We Need to Know Your Specialty.
+                                                <br />
+                                                Please specify Specialization
+                                            </p>
+                                        </div>
+                                        <div class="col-lg-7">
+                                            <p>
+                                                <select name="specialization" class="form-control select2-spe" multiple>
+                                                    @foreach (var spe in specialization)
+                                                    {
+                                                        <option value="@spe.Name">@spe.Name</option>
+                                                    }
+                                                </select>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="exp_box">
+                                        <h5 style="margin: 30px 0 15px 0;">Experience by year</h5>
+                                        <div class="row exp_item"></div>
+                                    </div>
+                                </div>
+                                <div class=" form-group panel text-center">
+                                    <button class="doc_border_btn arrow_btn_medium">Update<i class="arrow_carrot-2right"></i></button>
+                                    <a href="@Url.Action("Logout","Users")" class="doc_border_btn arrow_btn_medium text-danger">Log out <i class="fa fa-sign-out"></i></a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Content/js/pre-loader.js"></script>
+    <script src="~/Content/assets/bootstrap/js/popper.min.js"></script>
+    <script src="~/Content/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/parallaxie.js"></script>
+    <script src="~/Content/js/TweenMax.min.js"></script>
+    <script src="~/Content/js/jquery.parallax-scroll.js"></script>
+    <script src="~/Content/assets/wow/wow.min.js"></script>
+    <script src="~/Content/assets/counterup/jquery.counterup.min.js"></script>
+    <script src="~/Content/assets/counterup/jquery.waypoints.min.js"></script>
+    <script src="~/Content/assets/select2-4.0.10/dist/js/select2.full.min.js"></script>
+    <script src="~/Content/assets/mcustomscrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Content/assets/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+    <script src="~/Content/js/main.js"></script>
+    <script src="~/Content/js/Jquery_validate.js"></script>
+    <script src="~/Content/js/FirtTime.js?v1"></script>
+</body>
+</html>

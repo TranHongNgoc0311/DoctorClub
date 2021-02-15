@@ -1,0 +1,156 @@
+﻿
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="~/Content/img/logo.ico" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/assets/bootstrap/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="~/Content/assets/font-size/css/rvfs.css">
+    <link rel="stylesheet" href="~/Content/assets/iCheck/all.css">
+    <link href="~/Content/assets/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" />
+    <!-- icon css-->
+    <link href="~/Content/assets/select2-4.0.10/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/assets/elagent-icon/style.css">
+    <link rel="stylesheet" href="~/Content/assets/font-awesome/css/all.css">
+    <link href="~/Content/assets/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/assets/niceselectpicker/nice-select.css">
+    <link rel="stylesheet" href="~/Content/assets/animation/animate.css">
+    <link rel="stylesheet" href="~/Content/assets/prism/prism.css">
+    <link rel="stylesheet" href="~/Content/assets/prism/prism-coy.css">
+    <link rel="stylesheet" href="~/Content/assets/mcustomscrollbar/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <link rel="stylesheet" href="~/Content/css/responsive.css?v1">
+    <link rel="stylesheet" href="~/Content/css/forum.css?v10">
+    <link href="~/Content/css/validate-style.css" rel="stylesheet" />
+    @RenderSection("css", required: false)
+
+    <title>@ViewBag.Title</title>
+</head>
+@RenderSection("style", required: false)
+<body data-spy="scroll" data-target="#navbar-example3" data-offset="86" data-scroll-animation="true" class="doc">
+    <div id="preloader">
+        <div id="ctn-preloader" class="ctn-preloader">
+            <div class="round_spinner">
+                <div class="spinner"></div>
+                <div class="text">
+                    <img src="~/Content/img/spinner_logo.png?ver1" alt="">
+                    <h4><span>Doctor</span>Club</h4>
+                </div>
+            </div>
+            <h2 class="head">Did You Know?</h2>
+            <p></p>
+        </div>
+    </div>
+    <div class="snackbar-alert">
+        <blockquote class="media notice">
+            <i class="icon_volume-low"></i>
+            <div class="media-body content-alert"></div>
+        </blockquote>
+    </div>
+    <div class="body_wrapper">
+        @Html.Action("layout_header", "Home")
+
+        <div class="col-lg-7 col-md-8">
+            <div id="post" class="documentation_info">
+
+                @RenderBody()
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-4 doc_right_mobile_menu">
+            <div class="open_icon" id="right">
+                <i class="arrow_carrot-left"></i>
+                <i class="arrow_carrot-right"></i>
+            </div>
+            <div class="doc_rightsidebar scroll">
+                @Html.Action("UserBox", "Home")
+            </div>
+        </div>
+    </div>
+    </div>
+    </section>
+    <footer class="simple_footer">
+        <img class="leaf_right" src="~/Content/img/home_one/leaf_footter.png" alt="">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-sm-6">
+                    <p>© 2020 All Rights Reserved by <a href="@Url.Action("Forum","Home")">DoctorClub</a></p>
+                </div>
+                <div class="col-sm-6 text-right">
+                    <ul class="list-unstyled f_social_icon">
+                        <li><a href="#"><i class="social_facebook"></i></a></li>
+                        <li><a href="#"><i class="social_twitter"></i></a></li>
+                        <li><a href="#"><i class="social_vimeo"></i></a></li>
+                        <li><a href="#"><i class="social_linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    @Html.Action("PostModal", "Posts")
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/pre-loader.js"></script>
+    <script src="~/Content/assets/bootstrap/js/popper.min.js"></script>
+    <script src="~/Content/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/assets/bootstrap/js/bootstrap-select.min.js"></script>
+    <script src="~/Content/assets/select2-4.0.10/dist/js/select2.min.js"></script>
+    <script src="~/Content/assets/font-size/js/rv-jquery-fontsize-2.0.3.js"></script>
+    <script src="~/Content/js/parallaxie.js"></script>
+    <script src="~/Content/js/TweenMax.min.js"></script>
+    <script src="~/Content/js/anchor.js"></script>
+    <script src="~/Content/assets/wow/wow.min.js"></script>
+    <script src="~/Content/assets/prism/prism.js"></script>
+    <script src="~/Content/assets/mailchimp/plugins.js"></script>
+    <script src="~/Content/assets/niceselectpicker/jquery.nice-select.min.js"></script>
+    <script src="~/Content/assets/mcustomscrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Content/assets/tinymce/tinymce.min.js"></script>
+    <script src="~/Content/assets/tinymce/config.js?v5"></script>
+    <script src="~/Content/assets/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="~/Content/assets/iCheck/icheck.min.js"></script>
+    <script src="~/Content/js/main.js?v1"></script>
+    <script src="~/Content/js/forum.js?v9"></script>
+    @RenderSection("scripts", required: false)
+    <script src="~/Content/js/auto_slug.js?v1"></script>
+    <script src="~/Content/js/pagination.js?v1"></script>
+    <script src="~/Content/js/Jquery_validate.js"></script>
+    <script src="~/Content/js/Custom-validate.js?v3"></script>
+    @if (ViewBag.welcome != null)
+    {
+        if (ViewBag.welcome)
+        {
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: '<strong class="text-success">Success!</strong>',
+                    text: 'Welcome home, brother.'
+                });
+            </script>
+        }
+    }
+
+    <script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+        $(function () {
+            var oc = $.connection.onlineCount;
+
+            oc.client.online = function (c) {
+                $('#onlineUsers').text(c);
+            }
+
+            $.connection.hub.start().done(function () {
+
+            });
+        });
+    </script>
+</body>
+
+</html>

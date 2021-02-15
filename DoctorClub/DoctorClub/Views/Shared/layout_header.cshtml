@@ -1,0 +1,220 @@
+﻿@{
+    var category = ViewBag.category as List<DoctorClub.Models.DataModels.Categories>;
+}
+<nav class="navbar navbar-expand-lg menu_one display_none">
+    <div class="container custom_container">
+        <a class="navbar-brand sticky_logo" href="@Url.Action("Forum","Home")">
+            <img src="~/Content/img/logo-w.png" srcset="~/Content/img/logo-w2x.png 2x" alt="logo">
+            <img src="~/Content/img/logo.png" srcset="~/Content/img/logo-2x.png 2x" alt="logo">
+        </a>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="menu_toggle">
+                <span class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+                <span class="hamburger-cross">
+                    <span></span>
+                    <span></span>
+                </span>
+            </span>
+        </button>
+        <a class="nav_btn" href="@Url.Action("Search","Home")">Finding a doctor <i class="icon_search"></i></a>
+    </div>
+</nav>
+<div class="mobile_main_menu" id="sticky">
+    <div class="container">
+        <div class="mobile_menu_left">
+            <button type="button" class="navbar-toggler mobile_menu_btn">
+                <span class="menu_toggle ">
+                    <span class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
+                </span>
+            </button>
+            <a class="sticky_logo" href="@Url.Action("Forum","Home")">
+                <img src="~/Content/img/logo-w.png?ver1" alt="logo">
+                <img src="~/Content/img/logo.png?ver1" alt="logo">
+            </a>
+        </div>
+        <div class="mobile_menu_right">
+            <a href="@Url.Action("Index","Notification")" class="nav_btn">
+
+                @if (ViewBag.notification.Count > 0)
+                {
+                    <img src="~/Content/img/side-nav/notification.png" alt="">
+                }
+                else
+                {
+                    <img src="~/Content/img/side-nav/bell.png" alt="" title="Notification">
+                }
+            </a>
+        </div>
+    </div>
+</div>
+<div class="click_capture"></div>
+<div class="side_menu">
+    <div class="mobile_menu_header">
+        <div class="close_nav">
+            <i class="arrow_left"></i>
+            <i class="icon_close"></i>
+        </div>
+        <div class="mobile_logo">
+            <a href="#"><img src="~/Content/img/logo.png?ver1" alt="logo"></a>
+        </div>
+    </div>
+    <div class="mobile_nav_wrapper">
+        <nav class="mobile_nav_top">
+            <ul class="navbar-nav menu ml-auto">
+                <li class="nav-item dropdown submenu">
+                    <a href="#" class="nav-link">Home</a>
+                    <i class="arrow_carrot-down_alt2 mobile_dropdown_icon"></i>
+                    <ul class="dropdown-menu">
+                        <li class="nav-item"><a href="@Url.Action("Forum","Home")" class="nav-link">Cool Template</a></li>
+                        <li class="nav-item"><a href="index-2.html" class="nav-link">Light Template</a></li>
+                    </ul>
+                </li>
+                @foreach (var cat in category)
+                {
+                    <li class="nav-item dropdown submenu">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @cat.Name
+                        </a>
+                        <i class="arrow_carrot-down_alt2 mobile_dropdown_icon" aria-hidden="false"
+                           data-toggle="dropdown"></i>
+                        <ul class="dropdown-menu">
+                            @foreach (var sub in cat.SubCategories)
+                            {
+                                <li class="nav-item"><a href="@Url.Action("Index","Posts",new { slug = sub.Slug})" class="nav-link">@sub.Name</a></li>
+
+                            }
+                        </ul>
+                    </li>
+
+                }
+            </ul>
+        </nav>
+        <div class="mobile_nav_bottom">
+            <aside class="doc_left_sidebarlist">
+                <div class="scroll">
+                    <ul class="list-unstyled nav-sidebar">
+                        <li class="nav-item">
+                            <a href="@Url.Action("Forum","Home")" class="nav-link"><img src="~/Content/img/side-nav/home.png" alt="">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" data-toggle="modal" data-target="#exampleModal2" class="nav-link"><img src="~/Content/img/side-nav/edit.png" alt="">Write new post</a>
+                        </li>
+                    </ul>
+                    <ul class="list-unstyled nav-sidebar coding_nav">
+                        <li class="nav-item">
+                            <a href="@Url.Action("UserProfile","Users")" class="nav-link"><img src="~/Content/img/side-nav/account.png" alt="">Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("followedPost","Posts")" class="nav-link"><img src="~/Content/img/side-nav/document2.png" alt="">Posts/ Queries followed</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("UserPosts","Users")" class="nav-link">
+                                <img src="~/Content/img/side-nav/book.png" alt="">My posts / Queries
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Feedback","Home")" class="nav-link"><img src="~/Content/img/side-nav/support.png" alt="">Feedback</a>
+                        </li>
+                    </ul>
+                    <ul class="list-unstyled nav-sidebar bottom_nav">
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Setting")" class="nav-link"><img src="~/Content/img/side-nav/gear.png" alt="">Setting</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="@Url.Action("Logout","Users")" class="nav-link text-danger"><img src="~/Content/img/side-nav/users.png" alt="">Log out <i class="arrow_right"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+<section class="breadcrumb_area">
+    <img class="p_absolute bl_left" src="~/Content/img/v.svg" alt="">
+    <img class="p_absolute bl_right" src="~/Content/img/home_one/b_leaf.svg" alt="">
+    <img class="p_absolute star" src="~/Content/img/home_one/banner_bg.png" alt="">
+    <img class="p_absolute wave_shap_one" src="~/Content/img/blog-classic/shap_01.png" alt="">
+    <img class="p_absolute wave_shap_two" src="~/Content/img/blog-classic/shap_02.png" alt="">
+    <img class="p_absolute one wow fadeInRight" src="~/Content/img/home_one/b_man_two.png" alt="">
+    <img class="p_absolute two wow fadeInUp" data-wow-delay="0.2s" src="~/Content/img/home_one/flower.png" alt="">
+</section>
+<section class="page_breadcrumb">
+    <div class="container custom_container">
+        <div class="row">
+            <div class="col-sm-7">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">Medical connection</li>
+                        <li class="breadcrumb-item active" aria-current="page">DoctorClub</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="col-sm-5">
+                <span class="date"><i class="icon_clock_alt"></i>@DateTime.Now</span>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="doc_documentation_area" id="sticky_doc">
+    <div class="overlay_bg"></div>
+    <div class="container custom_container">
+        <div class="row">
+            <div class="col-lg-3 doc_mobile_menu display_none">
+                <aside class="doc_left_sidebarlist">
+                    <div class="open_icon" id="left">
+                        <i class="arrow_carrot-right"></i>
+                        <i class="arrow_carrot-left"></i>
+                    </div>
+                    <div class="scroll">
+                        <ul class="list-unstyled nav-sidebar">
+                            <li class="nav-item">
+                                <a href="@Url.Action("Forum","Home")" class="nav-link"><img src="~/Content/img/side-nav/home.png" alt="">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index","Notification")" class="nav-link">
+                                    <img src="~/Content/img/side-nav/bell.png" alt="">Notification
+                                    @if (ViewBag.notification.Count > 0)
+                                    {
+                                        <span class="badge" style="margin-left: 5px;">@ViewBag.notification.Count</span>
+                                    }
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" data-toggle="modal" data-target="#exampleModal2" class="nav-link"><img src="~/Content/img/side-nav/edit.png" alt="">Write new post</a>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled nav-sidebar coding_nav">
+                            <li class="nav-item">
+                                <a href="@Url.Action("UserProfile","Users")" class="nav-link"><img src="~/Content/img/side-nav/account.png" alt="">Account</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("followedPost","Posts")" class="nav-link"><img src="~/Content/img/side-nav/document2.png" alt="">Posts/ Queries followed</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("UserPosts","Users")" class="nav-link">
+                                    <img src="~/Content/img/side-nav/book.png" alt="">My posts / Queries
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Feedback","Home")" class="nav-link"><img src="~/Content/img/side-nav/support.png" alt="">Feedback</a>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled nav-sidebar bottom_nav">
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index","Setting")" class="nav-link"><img src="~/Content/img/side-nav/gear.png" alt="">Setting</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="@Url.Action("Logout","Users")" class="nav-link text-danger"><img src="~/Content/img/side-nav/users.png" alt="">Log out <i class="arrow_right"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>

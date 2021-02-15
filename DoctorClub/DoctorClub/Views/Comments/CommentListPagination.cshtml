@@ -1,0 +1,149 @@
+﻿@model IEnumerable<DoctorClub.Models.DataModels.Comments>
+
+
+
+
+@foreach (var item in Model)
+{
+    <div class="forum-comment" style="position: relative;">
+        <div class="forum-post-top">
+            <a class="author-avatar" href="#">
+                <img src="~/Content/Upload/@item.User.Image" style="width: 50px; height: 50px;" alt="author avatar">
+            </a>
+            <div class="forum-post-author">
+                <a class="author-name" href="#">@item.User.Username</a>
+                <div class="forum-author-meta">
+                    <div class="author-badge">
+                        @if (item.User.Level == 1)
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="13px">
+                                <path fill-rule="evenodd" fill="rgb(107, 112, 127)"
+                                      d="M10.010,3.449 C9.996,3.196 9.996,2.955 9.996,2.714 C9.996,2.519 9.810,2.369 9.567,2.369 C7.783,2.369 6.427,1.956 5.300,1.071 C5.128,0.945 4.871,0.945 4.700,1.071 C3.573,1.956 2.217,2.369 0.433,2.369 C0.190,2.369 0.004,2.519 0.004,2.714 C0.004,2.955 0.004,3.196 -0.010,3.449 C-0.067,5.861 -0.153,11.587 4.857,12.977 L5.000,13.000 L5.143,12.977 C10.138,11.587 10.067,5.873 10.010,3.449 ZM4.726,9.505 C4.640,9.563 4.541,9.597 4.426,9.597 L4.412,9.597 C4.298,9.597 4.184,9.551 4.112,9.482 L1.964,7.195 L3.245,5.996 L4.469,7.325 L7.047,4.678 L8.324,5.937 L4.726,9.505 Z" />
+                            </svg>
+                            <span>Admin</span>
+                        }
+                        else
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="15px">
+                                <path fill-rule="evenodd" fill="rgb(131, 135, 147)"
+                                      d="M11.729,12.136 L11.582,12.167 C11.362,12.415 11.125,12.645 10.869,12.857 L14.999,12.857 C15.134,12.857 15.255,12.944 15.307,13.077 C15.359,13.211 15.331,13.365 15.235,13.467 L14.488,14.268 C14.053,14.733 13.452,15.000 12.838,15.000 L2.495,15.000 C1.872,15.000 1.286,14.740 0.845,14.268 L0.098,13.467 C0.002,13.365 -0.026,13.211 0.026,13.077 C0.077,12.944 0.199,12.857 0.334,12.857 L4.463,12.857 C2.928,11.585 2.000,9.630 2.000,7.499 L2.000,6.785 C2.000,6.194 2.449,5.713 3.000,5.713 L12.333,5.713 C12.885,5.713 13.333,6.194 13.333,6.785 L13.333,7.343 C13.869,7.160 14.736,6.973 15.355,7.400 C15.783,7.696 16.000,8.209 16.000,8.928 C16.000,11.239 11.903,12.100 11.729,12.136 ZM14.994,8.002 C14.557,7.698 13.715,7.941 13.294,8.113 C13.197,9.261 12.837,10.339 12.255,11.269 C13.480,10.911 15.333,10.116 15.333,8.928 C15.333,8.462 15.223,8.158 14.994,8.002 ZM10.261,4.419 C10.376,4.573 10.353,4.798 10.209,4.921 C10.148,4.974 10.074,4.999 10.001,4.999 C9.903,4.999 9.807,4.954 9.740,4.865 C9.198,4.139 9.198,3.002 9.741,2.277 C10.086,1.816 10.086,1.040 9.742,0.580 C9.627,0.426 9.650,0.201 9.794,0.078 C9.937,-0.044 10.146,-0.020 10.263,0.134 C10.805,0.860 10.805,1.996 10.263,2.722 C9.917,3.183 9.917,3.959 10.261,4.419 ZM8.259,4.419 C8.373,4.573 8.350,4.798 8.207,4.921 C8.145,4.974 8.071,4.999 7.999,4.999 C7.901,4.999 7.804,4.954 7.738,4.865 C7.195,4.139 7.195,3.002 7.738,2.277 C8.082,1.816 8.082,1.040 7.739,0.580 C7.624,0.426 7.647,0.201 7.791,0.078 C7.935,-0.045 8.145,-0.020 8.259,0.134 C8.802,0.860 8.802,1.996 8.259,2.722 C7.915,3.183 7.915,3.959 8.259,4.419 ZM6.261,4.418 C6.376,4.572 6.353,4.797 6.210,4.920 C6.148,4.973 6.074,4.999 6.001,4.999 C5.903,4.999 5.807,4.953 5.741,4.865 C5.198,4.139 5.198,3.002 5.741,2.276 C6.085,1.815 6.085,1.039 5.742,0.580 C5.627,0.426 5.650,0.201 5.794,0.078 C5.937,-0.046 6.147,-0.020 6.262,0.133 C6.804,0.859 6.804,1.996 6.262,2.721 C5.918,3.182 5.918,3.959 6.261,4.418 Z" />
+                            </svg>
+                            <span>Member</span>
+                        }
+                    </div>
+                    <div class="author-badge">
+                        <i class="icon_calendar"></i>
+                        <a href="">@item.Created</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center highlight_text useful-box" id="useful-@item.Id">
+            @{
+                var like = item.CmtLikes.Where(x => x.Status == true).Count();
+                var dislike = item.CmtLikes.Where(x => x.Status == false).Count();
+                var useful = like - dislike;
+            }
+            <p class="h_green">
+                <span class="useful-content">
+                    @useful
+                </span>
+                @(useful > 1000 ? "...":"")
+            </p>
+        </div>
+        <div class="comment-content">
+            <p id="content-@item.Id">@item.Content</p>
+            <div class="action-button-container action-btns" id="comment-@item.Id">
+                <a onclick="subComment('@item.Id')" class="action_btn doc_border_btn">Reply</a>
+                <a onclick="LikeComment(1,'@item.Id',@User.Identity.Name)" class="like action_btn too-btn @(item.CmtLikes.Where(x=>x.User.Id == int.Parse(User.Identity.Name) && x.Status == true).FirstOrDefault() != null?"btn_active":"")"><i class="fa fa-thumbs-o-up"></i></a>
+                <a onclick="LikeComment(0,'@item.Id',@User.Identity.Name)" class="dislike action_btn too-btn @(item.CmtLikes.Where(x=>x.User.Id == int.Parse(User.Identity.Name) && x.Status == false).FirstOrDefault() != null?"btn_active":"")"><i class="fa fa-thumbs-o-down"></i></a>
+            </div>
+            @if (item.UserId == int.Parse(User.Identity.Name))
+            {
+                <div class="button_inner_one" style="margin-top: 5px;">
+                    <a style="cursor: pointer;" onclick="edit_comment('@item.Id')" class="doc_border_btn btn_small"><span class="text-warning">Edit</span></a>
+                    <a style="cursor: pointer;" onclick="delete_comment('@item.Id')" class="doc_border_btn btn_small"><span class="text-danger">Delete</span></a>
+                </div>
+            }
+
+        </div>
+        <ul style="list-style-type: none;" id="chil-comment-@item.Id">
+            <li>
+                @Html.Action("CommentChild", "Comments", new { parentId = item.Id })
+            </li>
+        </ul>
+    </div>
+}
+
+<div class="pagination-wrapper">
+    <div class="view-post-of">
+        <p>Viewing 5 Comments - @ViewBag.start through @(ViewBag.start+Model.Count()-1) (of @ViewBag.totalRecord total)</p>
+    </div>
+    <ul class="post-pagination">
+        @{
+            int position;
+            int pageCurrent = ViewBag.pageCurrent;
+            float numSize = ViewBag.numSize;
+            var dot = "...";
+            if (numSize > 1)
+            {
+                <li class="prev-post @(pageCurrent>1?"":"pegi-disable")">
+                    <a onclick="pagination('@Model.FirstOrDefault().PostId',@(pageCurrent-1))"><i class="arrow_carrot-left"></i></a>
+                </li>
+                for (position = 1; position <= numSize; position++)
+                {
+
+                    if (position == pageCurrent)
+                    {
+
+                        <li><a onclick="pagination('@Model.FirstOrDefault().PostId',@position)" class="active">@position</a></li>
+                    }
+
+                    else
+                    {
+                        if (position == 1 || position >= pageCurrent - 1 && position < pageCurrent || position == numSize || position > pageCurrent && position <= pageCurrent + 1)
+                        {
+                            <li><a onclick="pagination('@Model.FirstOrDefault().PostId',@position)">@position</a></li>
+                        }
+                        else
+                        {
+                            <li>@dot</li>
+                            dot = "";
+                        }
+                    }
+
+                }
+                <li class="next-post @(pageCurrent > 0 && pageCurrent < numSize?"":"pegi-disable")">
+                    <a onclick="pagination('@Model.FirstOrDefault().PostId',@(pageCurrent+1))"><i class="arrow_carrot-right"></i></a>
+                </li>
+            }
+
+        }
+    </ul>
+</div>
+<div class="modal fade img_modal" id="edit-comment">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i class=" icon_close"></i>
+    </button>
+    <div class="modal-dialog help_form">
+        <div class="modal-content">
+            <div class="container-fluid">
+                <div class="shortcode_title">
+                    <h1 style="color: #0094ff;">Edit my comment.</h1>
+                </div>
+                @using (Html.BeginForm("Edit", "Comments", FormMethod.Post, new { @class = "contact_form"}))
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="Id">
+
+                    <div class="form-group postContent">
+                        <textarea name="Content" rows="5"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn action_btn">Post</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

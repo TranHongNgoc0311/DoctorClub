@@ -1,0 +1,172 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<DoctorClub.Models.DataModels.Users>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Backend/Views/Shared/_Layout.cshtml";
+}
+<div class="panel panel-default">
+    <div class="panel-body table-responsive">
+        <div class="row">
+            <div class="col-md-6">
+                <b style="font-size:25px">Users baned</b>
+            </div>
+            <div class="col-md-6">
+                <form method="get" action="@Url.Action("IndexBaned","Users")" class="form-inline">
+                    <div class="form-group">
+                        <label for="exampleInputEmail2">Search : </label>
+                        @Html.TextBox("strSearching", ViewBag.CurrentFilter as string)
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Search</button>
+
+                </form>
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Username
+                </th>
+                <th>
+                    Avatar
+                </th>
+                <th>
+                    Created
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        <img src="~/Content/Upload/@Html.DisplayFor(modelItem => item.Image)" style="width:130px" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Created)
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" onclick="unban_users('@item.Id')">Un ban</button>
+                        <a href="@Url.Action("Details", "Users", new { id = item.Id })"><button class="btn btn-sm btn-primary">Detail</button></a>
+                        <button class="btn btn-sm btn-danger" onclick="delete_users('@item.Id')">Delete</button>
+                    </td>
+                </tr>
+            }
+        </table>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount   @Html.PagedListPager(Model, pageno => Url.Action("IndexBaned", new { pageno, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>
+<script>
+        function delete_users(id) {
+            Swal.fire({
+                title: 'Do you want to delete this user?',
+                text: "Permanently delete this user and permanently lose data !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete user !'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'get',
+                        url: '/Admin/Users/DeleteConfirmedBaned/' + id,
+                        success: function (data) {
+                            if (data) {
+
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1500);
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'You have successfully deleted!',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    function unban_users(id) {
+            Swal.fire({
+                title: 'Do you want to un ban this user?',
+                text: "Users will be active normally",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, un ban user !'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'get',
+                        url: '/Admin/Users/UnBan/' + id,
+                        success: function (data) {
+                            if (data) {
+
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 1500);
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'You have successfully un ban!',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+
+                            }
+                        }
+                    });
+                }
+            });
+    }
+    function SetAdmin_users(id) {
+        Swal.fire({
+            title: 'Do you want set this user to admin?',
+            text: "This user has administrator rights to this forum !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, set user to admin !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Admin/Users/SetAdmin/' + id,
+                    success: function (data) {
+                        if (data) {
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'You have successfully set user to admin !',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>

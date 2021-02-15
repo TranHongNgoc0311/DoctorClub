@@ -1,0 +1,81 @@
+﻿@model DoctorClub.Models.DataModels.UserSpecializations
+
+@{
+    ViewBag.Title = "Specialization and experience edit";
+    Layout = "~/Views/Shared/_LayoutForum.cshtml";
+    var specializations = ViewBag.specializations as IEnumerable<DoctorClub.Models.DataModels.Specializations>;
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal box-shadow mt-4 p-4">
+        <h4>UserSpecializations</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SpId, "SpId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select name="spe" class="form-control select2_s" required="required">
+                    @foreach (var s in specializations)
+                    {
+                        <option value="@s.Name" @(s.Id == Model.SpId ? "selected" : "")>@s.Name</option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(model => model.SpId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.position, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.position, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.position, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Place, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Place, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Place, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.From, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.From, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.To, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.To, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input class="action_btn btn_small_two" type="submit" value="Save" />
+            </div>
+        </div>
+    </div>
+}
+@section scripts{
+    <script>
+        
+        $('.select2_s').select2({
+            tags: true,
+            width: "100%",
+            placeholder: "Enter your specialization"
+        });
+    </script>
+}

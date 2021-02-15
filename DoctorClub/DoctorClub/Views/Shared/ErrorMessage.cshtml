@@ -1,0 +1,75 @@
+﻿@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="~/Content/img/logo.ico" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/assets/bootstrap/css/bootstrap.min.css">
+    <!-- icon css-->
+    <link rel="stylesheet" href="~/Content/assets/elagent-icon/style.css">
+    <link rel="stylesheet" href="~/Content/assets/animation/animate.css">
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <link rel="stylesheet" href="~/Content/css/responsive.css">
+    <title>DoctorClub</title>
+    <link rel="stylesheet" href="~/Content/scss/_button.scss">
+</head>
+<style>
+    .error_img .two {
+        margin: 0 12px;
+        top: 10px;
+    }
+</style>
+<body data-scroll-animation="true">
+    <div id="preloader">
+        <div id="ctn-preloader" class="ctn-preloader">
+            <div class="round_spinner">
+                <div class="spinner"></div>
+                <div class="text">
+                    <img src="~/Content/img/spinner_logo.png" alt="">
+                    <h4><span>Doc</span>ly</h4>
+                </div>
+            </div>
+            <h2 class="head">Did You Know?</h2>
+            <p></p>
+        </div>
+    </div>
+    <div class="body_wrapper">
+        <section class="error_area bg_color">
+            <div class="error_dot one"></div>
+            <div class="error_dot two"></div>
+            <div class="error_dot three"></div>
+            <div class="error_dot four"></div>
+            <div class="container">
+                <div class="error_content_two text-center">
+                    <div class="error_img">
+                        <img class="p_absolute error_shap" src="~/Content/img/404_bg.png" alt="">
+                        <div class="two wow clipInDown" data-wow-delay="1.5s"><img class="img_two" src="~/Content/img/sorry.png" style="width: 400px;" alt=""></div>
+                    </div>
+                    <h2>@ViewBag.title .</h2>
+                    <p>@ViewBag.content</p>
+                    <a href="@Url.Action(ViewBag.action,ViewBag.controller)" class="doc_border_btn arrow_btn_medium">Back to @ViewBag.page_title <i class="arrow_right"></i></a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Content/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/js/pre-loader.js"></script>
+    <script src="~/Content/assets/bootstrap/js/popper.min.js"></script>
+    <script src="~/Content/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/parallaxie.js"></script>
+    <script src="~/Content/js/TweenMax.min.js"></script>
+    <script src="~/Content/assets/wow/wow.min.js"></script>
+    <script src="~/Content/js/main.js"></script>
+</body>
+
+</html>

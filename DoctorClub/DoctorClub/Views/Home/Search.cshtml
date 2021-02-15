@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var specialization = ViewBag.specialization as IEnumerable<DoctorClub.Models.DataModels.Specializations>;
+}
+@section style{
+
+    <link href="~/Content/css/search.css" rel="stylesheet" />
+    <link href="~/Content/css/validate-style.css" rel="stylesheet" />
+}
+<section class="doc_banner_area_two">
+    <div class="b_plus one" data-parallax='{"x": 250, "y": 160, "rotateZ":500}'><img src="~/Content/img/home_two/plus.png" alt=""></div>
+    <div class="b_plus two" data-parallax='{"x": 250, "y": 260, "rotateZ":500}'><img src="~/Content/img/home_two/plus_one.png" alt=""></div>
+    <div class="b_round r_one" data-parallax='{"x": 0, "y": 100, "rotateZ":0}'></div>
+    <div class="b_round r_two" data-parallax='{"x": -10, "y": 80, "rotateY":0}'></div>
+    <div class="b_round r_three"></div>
+    <div class="b_round r_four"></div>
+    <img class="p_absolute building_img" src="~/Content/img/home_two/building.png" alt="">
+    <img class="p_absolute table_img wow fadeInLeft" src="~/Content/img/home_two/table.svg" alt="">
+    <img class="p_absolute flower wow fadeInUp" data-wow-delay="0.6s" src="~/Content/img/home_two/flower.png" alt="">
+    <img class="p_absolute bord wow fadeInRight" data-wow-delay="0.4s" src="~/Content/img/home_two/bord.png" alt="">
+    <img class="p_absolute girl wow fadeInRight" data-wow-delay="0.8s" src="~/Content/img/home_two/girl.png" alt="">
+    <div class="container">
+        <div class="doc_banner_text_two text-center">
+            <h2>Looking for help?</h2>
+            <p>Enter information into the form and start looking for your doctor.</p>
+        </div>
+    </div>
+</section>
+<section class="doc_categories_guide_area sec_pad">
+    <div class="container">
+        <div class="row">
+            <div class="container-fluid">
+                <div class="categories_guide_item wow fadeInUp">
+                    <div class="section_title text-center">
+                        <h2 class="h_title wow fadeInUp">Finding a doctor</h2>
+                        <p class="wow fadeInUp text-muted" data-wow-delay="0.2s">Easily finding a doctor with "Advanced search" of <span style="font-weight: bold" class="text-danger">DoctorClub</span>.</p>
+                    </div>
+                    <div class="doc_tag_title">
+                        @using (Html.BeginForm("searchResult","Home",FormMethod.Get))
+                        {
+                            <div class=" form-group panel bg-1">
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <label for=""><b>Search for keywords:</b> </label>
+                                        <p>
+                                            Please enter the keywords you are looking for in the form, select information about your doctor before searching.
+                                            If you don't have any information about the doctor you are looking for, skip this step
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <input type="text" name="keyword" class="form-control">
+                                        <br />
+                                        <h6>Search option:</h6>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="option" value="1" checked="checked">
+                                                Doctor name
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="option" value="2">
+                                                Phone number
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="option" value="3">
+                                                Email
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="dashed">
+                            <div class=" form-group panel">
+                                <h5 style="margin: 30px 0 15px 0;">Advanced search</h5>
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <label for=""><b>Location:</b> </label><small class="text-primary">(City name,Country name)</small>
+                                        <p>
+                                            In which area do you need to find a doctor?
+                                            <br />
+                                            Please enter here the area you are looking for.
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <p>
+                                            <input type="text" name="location" class="form-control">
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <label for=""><b>Specialization</b></label>
+                                        <p>
+                                            What kind of doctor are you looking for?
+                                            <br />
+                                            what specialties do you have?
+                                            <br />
+                                            Please select from the form the specialized skills that are required for the doctor you are looking for.
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <p>
+                                            <select name="specialization" class="form-control" multiple>
+                                                @foreach (var spe in specialization)
+                                                {
+                                                    <option value="@spe.Id">@spe.Name</option>
+                                                }
+                                            </select>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="exp_box">
+                                    <h5 style="margin: 30px 0 15px 0;">Experience by year</h5>
+                                    <div class="row exp_item"></div>
+                                </div>
+                            </div>
+                            <div class=" form-group panel text-center">
+                                <button class="doc_border_btn arrow_btn_medium">Search<i class="icon_search_alt"></i></button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script src="~/Content/js/Jquery_validate.js"></script>
+    <script src="~/Content/js/search.js"></script>
+}

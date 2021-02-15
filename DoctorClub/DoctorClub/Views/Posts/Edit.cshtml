@@ -1,0 +1,64 @@
+﻿@model DoctorClub.Models.DataModels.Posts
+
+@{
+    ViewBag.Title = "Edit | "+Model.Title;
+    Layout = "~/Views/Shared/_LayoutForum.cshtml";
+    var category = ViewBag.cats as List<DoctorClub.Models.DataModels.Categories>;
+    var tags = ViewBag.Tags as List<DoctorClub.Models.DataModels.Tags>;
+}
+
+    <div style="margin-top: 20px;">
+        @using (Html.BeginForm("Edit", "Posts", FormMethod.Post, new { @class = "contact_form edit_post"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.Id)
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <input type="text" name="Title" class="form-control title" value="@Model.Title">
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    <input type="hidden" name="Slug" class="slug" value="@Model.Slug">
+                </div>
+                <div class="form-group col-md-6">
+                    <select name="SubCatId" class="form-control edit-category">
+                        <option selected disabled>Category</option>
+                        @foreach (var cats in category)
+                        {
+                            <optgroup label="@cats.Name">
+                                @foreach (var c in cats.SubCategories)
+                                {
+                                    <option value="@c.Id" @(Model.SubCatId == c.Id ? "selected" : "")>@c.Name</option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                    @Html.ValidationMessageFor(model => model.SubCatId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group postContent">
+                <textarea name="Content" class="edit-content" rows="5" style="height: 300px;">@Html.Raw(HttpUtility.HtmlDecode(Model.Content))</textarea>
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <select name="Tags" class="form-control edit-tags" multiple>
+                    @foreach (var t in tags)
+                    {
+                        <option value="@t.Name" @(Model.PostTags.SingleOrDefault(x => x.TagId.Equals(t.id)) != null ? "selected" : "")>@t.Name</option>
+                    }
+                </select>
+                @Html.ValidationMessage("Tags", "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <button class="doc_border_btn btn_small_two icon_btn">Update my post<i class="icon_pencil-edit"></i></button>
+            </div>
+        }
+    </div>
+
+@section scripts{
+    <script>
+        $('.edit-tags').select2({
+            tags: true,
+            placeholder: "Enter all tags of this post",
+            width: 'resolve'
+        });
+    </script>
+    }

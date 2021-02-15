@@ -1,0 +1,100 @@
+﻿@model DoctorClub.Models.DataModels.Tags
+
+@{
+    Layout = "~/Views/Shared/_LayoutForum.cshtml";
+}
+
+
+<div class="row" style="padding-top: 50px;">
+    <div class="container-fluid">
+
+        <div class="answer-action">
+            <div class="action-content">
+                <div class="image-wrap">
+                    <img src="~/Content/img/home_support/answer.png" alt="answer action">
+                </div>
+
+                <div class="content">
+                    <h2 class="ans-title">Can’t find an answer?</h2>
+                    <p>
+                        Make use of a qualified tutor to get the answer
+                    </p>
+                </div>
+            </div>
+            <!-- /.action-content -->
+
+            <div class="action-button-container">
+                <a href="#" data-toggle="modal" data-target="#exampleModal2" class="action_btn btn-ans">Ask a Question</a>
+            </div>
+            <!-- /.action-button-container -->
+        </div>
+    </div>
+</div>
+
+@{
+    if (Model.PostTags.Count() > 0)
+    {
+        <!-- /.answer-action -->
+        <div class="post-header">
+
+            <div class="support-category-menus">
+                <ul class="category-menu">
+                    <li>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Title
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLabel">
+                                <h3 class="title">Filter by title</h3>
+
+                                <div class="cate-search-form" style="padding-bottom: 10px;">
+                                    <input type="text" onkeyup="loadPagination(@Model.id,1)" id="title-post" placeholder="Filter title">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Sort
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <h3 class="title">Sort by</h3>
+                                <div class="short-by" id="sortBy">
+                                    <a class="dropdown-item active-short" onclick="loadPagination(@Model.id,1)" data-sort="1" href="#0">Newest</a>
+                                    <a class="dropdown-item" onclick="loadPagination(@Model.id,1)" data-sort="2" href="#0">Oldest</a>
+                                    <a class="dropdown-item" onclick="loadPagination(@Model.id,1)" data-sort="3" href="#0">Most commented</a>
+                                    <a class="dropdown-item" onclick="loadPagination(@Model.id,1)" data-sort="4" href="#0">Least commented</a>
+                                    <a class="dropdown-item" onclick="loadPagination(@Model.id,1)" data-sort="5" href="#0">Recently updated</a>
+                                    <a class="dropdown-item" onclick="loadPagination(@Model.id,1)" data-sort="6" href="#0">Least recently updated</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.support-category-menus -->
+        </div>
+        <div id="post-list">
+
+            @Html.Action("Pagination", "Tags", new { tag = Model.id})
+        </div>
+    }
+    else
+    {
+
+        <div class="error_area bg_color">
+            <div class="error_dot one"></div>
+            <div class="error_dot two"></div>
+            <div class="error_dot three"></div>
+            <div class="error_dot four"></div>
+            <div class="container">
+                <div class="error_content_two text-center sec_pad">
+                    <h2 style="color: #000000!important;">Oop... We can't find what you are looking for.</h2>
+                    <p>Sorry for the inconvenience. There are not thing here, please turn back or <br>@Html.ActionLink("back to home page", "Forum", "Home").</p>
+                </div>
+            </div>
+        </div>
+    }
+}
+

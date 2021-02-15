@@ -1,0 +1,164 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<DoctorClub.Models.DataModels.SubCategories>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Backend/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-body table-responsive">
+        <div class="row">
+            <div class="col-md-4">
+                <b style="font-size:25px">SubCategories Active</b>
+            </div>
+            <div class="col-md-8">
+                <form method="get" action="@Url.Action("Index","SubCategories")" class="form-inline">
+                    <div class="form-group">
+                        <label for="exampleInputEmail2">Search : </label>
+                        @Html.TextBox("strSearching", ViewBag.CurrentFilter as string)
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("dropSearchingId", "---Select---")
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Search</button>
+
+                </form>
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    Name Category
+                </th>
+                <th>
+                    Name SubCategory
+                </th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit","SubCategories", new { id = item.Id })"><button type="button" class="btn btn-sm btn-primary">Edit </button></a>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#@item.Id">
+                            Details
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="delete_SbCate('@item.Id')">Delete </button>
+                        <button type="button" class="btn btn-sm btn-warning" onclick="hidden_SbCate('@item.Id')">Hide</button>
+                    </td>
+                </tr>
+                <div class="modal fade" id="@item.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel"> <b>Title:</b> @item.Category.Name</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <b>Category Name : </b> @item.Name <br />
+                                    <div class="col-md-12">
+                                        <br />
+                                        <b>Description :</b> <br />
+                                        @item.description
+                                        <br /><br />
+                                    </div>
+                                    <b>Slug : </b><i>@item.Slug</i>
+                                </div><br />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="delete_SbCate('@item.Id')">Delete </button>
+                                <button type="button" class="btn btn-sm btn-warning" onclick="hidden_SbCate('@item.Id')">Hide</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </table>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount   @Html.PagedListPager(Model, pageno => Url.Action("Index", new { pageno, currentFilter = ViewBag.CurrentFilter, CurrentDrop = ViewBag.CurrentDrop }))
+    </div>
+</div>
+<script>
+    function delete_SbCate(id) {
+        Swal.fire({
+            title: 'Do you want to delete this SubCategory?',
+            text: "Permanently delete this SubCategory and permanently lose data !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Admin/SubCategories/DeleteConfirmed/' + id,
+                    success: function (data) {
+                        if (data) {
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                            $("#" + id).modal("hide");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'You have successfully deleted!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+                    }
+                });
+            }
+        });
+    }
+    function hidden_SbCate(id) {
+        Swal.fire({
+            title: 'Do you want to hiden this SubCategory?',
+            text: "Hiden this SubCategory !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, hiden it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Admin/SubCategories/Hidden/' + id,
+                    success: function (data) {
+                        if (data) {
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                            $("#" + id).modal("hide");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'You have successfully Hidden!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>

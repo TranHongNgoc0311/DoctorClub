@@ -1,0 +1,93 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<DoctorClub.Models.DataModels.UserNotifications>
+
+@{
+    ViewBag.Title = "Notifications";
+    Layout = "~/Views/Shared/_LayoutForum.cshtml";
+}
+@section style{
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Content/css/class_responsive.css" rel="stylesheet" />
+}
+<div class="container-fluid mt-5">
+    <div class="box-shadow">
+        <div class="mailbox-controls">
+            <div class="btn-group">
+            </div>
+            <!-- /.btn-group -->
+            <a href="#" onclick="location.reload()" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></a>
+            <a href="@Url.Action("ReadAll","Notification",new { page = ViewBag.page })" class="btn btn-default btn-sm" style="float: right;">mark all as read</a>
+            <!-- /.pull-right -->
+        </div>
+        <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped xs-text sm-text">
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="mailbox-star"><a href="#"><i class="fa fa-star @(item.Status?"text-yellow":"")"></i></a></td>
+                            <td class="mailbox-subject"><a href="@item.Notification.url">@item.Notification.Title</a></td>
+                            <td class="mailbox-date">
+                                <small>
+                                    <span style="display: block;">
+                                        @item.Notification.Created.Value.ToString("dd-MM-yyyy")
+                                    </span>
+                                    <span style="display: block;">
+                                        @item.Notification.Created.Value.ToString("HH:mm tt")
+                                    </span>
+                                </small>
+                            </td>
+                            <td>
+                                <a href="#" onclick="deleteNotifi('@Url.Action("delete","Notification",new { id = item.id,page = ViewBag.page})')"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <!-- /.table -->
+        </div>
+        <!-- /.mail-box-messages -->
+        <div class="pagination m-2">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("Index", "Notification", new { page = page}))
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(function () {
+
+            if ($('#something').is(':checked')) {
+                $(".mailbox-controls").find('button').css("color", "#6b707f");
+                $(".mailbox-controls").find('a').css("color", "#6b707f");
+            } else {
+                $(".mailbox-controls").find('button').css("color", "#10b3d6");
+                $(".mailbox-controls").find('a').css("color", "#10b3d6");
+            }
+        });
+
+        function deleteNotifi(url) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                    setTimeout(function () {
+                        window.location.href = url;
+                    }, 2000);
+                }
+            });
+        }
+    </script>
+    }

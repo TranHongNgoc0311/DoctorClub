@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DoctorClub.Models.DataModels.Posts>
+
+@{
+    ViewBag.Title = "followedPost";
+    Layout = "~/Views/Shared/_LayoutForum.cshtml";
+}
+
+    <div class="row" style="padding-top:10px;">
+        <div class="container-fluid">
+            <div class="post-header">
+
+                <div class="support-category-menus">
+                    <ul class="category-menu">
+                        <li>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Title
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLabel">
+                                    <h3 class="title">Filter by title</h3>
+
+                                    <div class="cate-search-form" style="padding-bottom: 10px;">
+                                        <input type="text" onkeyup="loadFollowedPost()" id="title-my-post" placeholder="Filter title">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Sort
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <h3 class="title">Sort by</h3>
+                                    <div class="short-by" id="sortBy">
+                                        <a class="dropdown-item active-short" onclick="loadPost()" data-sort="1" href="#0">Newest</a>
+                                        <a class="dropdown-item" onclick="loadFollowedPost()" data-sort="2" href="#0">Oldest</a>
+                                        <a class="dropdown-item" onclick="loadFollowedPost()" data-sort="3" href="#0">Most commented</a>
+                                        <a class="dropdown-item" onclick="loadFollowedPost()" data-sort="4" href="#0">Least commented</a>
+                                        <a class="dropdown-item" onclick="loadFollowedPost()" data-sort="5" href="#0">Recently updated</a>
+                                        <a class="dropdown-item" onclick="loadFollowedPost()" data-sort="6" href="#0">Least recently updated</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.support-category-menus -->
+            </div>
+            <div id="table-my-post">
+                @Html.Action("followedPostPagination", "Posts")
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,214 @@
+﻿
+/*body {
+    background: url(../img/bg.png) no-repeat fixed center;
+    background-size: cover;
+}*/
+
+.box.box-primary {
+    border-top-color: #3c8dbc;
+    border-left: 1px solid #3c8dbc;
+    border-right: 1px solid #3c8dbc;
+}
+.box-shadow {
+    box-shadow: 0px 4px 10px 0px rgba(49, 12, 2, 0.5);
+}
+.text-yellow{
+    color: yellow;
+}
+.box {
+    position: relative;
+    border-radius: 3px;
+    background: #ffffff;
+    border-top: 3px solid #d2d6de;
+    margin-bottom: 20px;
+    width: 100%;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+.box-body {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    padding: 10px;
+}
+.profile-user-img {
+    margin: 0 auto;
+    width: 175px;
+    padding: 3px;
+    border: 3px solid #d2d6de;
+    display: block;
+}
+.profile-username {
+    font-size: 21px;
+    margin-top: 5px;
+    color: #000000!important;
+}
+
+.box-profile b, .box-profile i {
+    color: #000000 !important;
+}
+/* The snackbar - position it at the bottom and in the middle of the screen */
+.snackbar-alert {
+    visibility: hidden;
+    align-items: center;
+    width: 30%;
+    text-align: center;
+    position: fixed;
+    z-index: 10;
+    right: 0px;
+    margin: 35px;
+    top: 55px;
+}
+
+@media (max-width: 780px){
+    .snackbar-alert {
+        width: 80%;
+        left: 0;
+        right: 0;
+    }
+}
+.content-alert{
+    color: #fff;
+}
+/* Show the snackbar when clicking on a button (class added with JavaScript) */
+.snackbar-alert.show {
+    visibility: visible; /* Show the snackbar */
+    /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+  However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+.title-userBox{
+    margin-bottom: 5px;
+}
+
+.doc_rightsidebar .private_option, .doc_rightsidebar .doc_switch {
+    margin-left: -40px;
+    padding-left: 40px;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.doc_rightsidebar .private_option {
+    display: flex;
+    align-items: center;
+    padding-bottom: 36px;
+}
+.doc_rightsidebar .private_option .tab-btn {
+    font-size: 16px;
+    color: #10b3d6;
+    line-height: 22px;
+    margin-bottom: 0;
+    padding-top: 2px;
+    cursor: pointer;
+    transition: color 0.2s linear;
+}
+.doc_rightsidebar .private_option input[type=checkbox] {
+    width: 50px;
+    height: 22px;
+    border: 1px solid #91e1f2;
+    background: #e7f7fb;
+    display: block;
+    border-radius: 25px;
+    margin: 0 12px 0 15px;
+    position: relative;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    box-sizing: content-box;
+}
+.doc_rightsidebar .private_option input[type=checkbox]:before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    background: #10b3d6;
+    position: absolute;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.2s linear;
+    left: 3px;
+}
+.doc_rightsidebar .private_option input[type=checkbox]:checked:before {
+    left: calc(100% - 19px);
+}
+.doc_rightsidebar .private_option input[type=checkbox] + .tab-btn {
+    color: #6b707f;
+}
+.doc_rightsidebar .private_option input[type=checkbox]:checked + .tab-btn {
+    color: #10b3d6;
+}
+.input-search-form input {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    padding: 15px 30px;
+    height: 60px;
+}
+.input-search-form label{
+    background: transparent;
+    border: 0;
+    padding-right: 20px;
+    color: #10b3d6;
+    font-size: 24px;
+    cursor: pointer;
+    padding-top: 15px;
+}
+.input-search-form {
+    box-shadow: 0px 4px 10px 0px rgba(49, 12, 2, 0.06);
+    max-width: 770px;
+    margin: 0 auto;
+    display: flex;
+    background: #fff;
+    border-radius: 30px;
+}

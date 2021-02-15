@@ -1,0 +1,152 @@
+﻿
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" href="~/Content/img/logo.ico" type="image/x-icon">
+    <!-- Bootstrap CSS -->
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/slick/slick.css" rel="stylesheet" />
+    <link href="~/Content/assets/slick/slick-theme.css" rel="stylesheet" />
+    <link href="~/Content/assets/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" />
+    <!-- icon css-->
+    <link href="~/Content/assets/elagent-icon/style.css" rel="stylesheet" />
+    <link href="~/Content/assets/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/Content/assets/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/assets/animation/animate.css" rel="stylesheet" />
+    <link href="~/Content/css/style.css?v1" rel="stylesheet" />
+    <link href="~/Content/css/main.css" rel="stylesheet" />
+    <link href="~/Content/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/css/class_responsive.css?v1" rel="stylesheet" />
+    <link href="~/Content/assets/select2-4.0.10/dist/css/select2.min.css" rel="stylesheet" />
+    @RenderSection("style", required: false)
+    <title>DoctorClub | @ViewBag.Title</title>
+</head>
+@RenderSection("css", required: false)
+<body data-scroll-animation="true">
+    <div id="preloader">
+        <div id="ctn-preloader" class="ctn-preloader">
+            <div class="round_spinner">
+                <div class="spinner"></div>
+                <div class="text">
+                    <img src="~/Content/img/spinner_logo.png?ver1" alt="">
+                    <h4><span>Doctor</span>Club</h4>
+                </div>
+            </div>
+            <h2 class="head">Did You Know?</h2>
+            <p></p>
+        </div>
+    </div>
+    <div class="body_wrapper">
+        <div class="header_top">
+            <div class="container">
+                <div class="row">
+                </div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg menu_one mt-40 menu_logo_change" id="sticky">
+            <div class="container">
+                <a class="navbar-brand sticky_logo" href="@Url.Action("Index","Home")">
+                    <img src="~/Content/img/logo.png?ver1" srcset="~/Content/img/logo-2x.png 2x" alt="logo">
+                    <img src="~/Content/img/logo.png?ver1" srcset="~/Content/img/logo-2x.png 2x" alt="logo">
+                </a>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="menu_toggle">
+                        <span class="hamburger">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                        <span class="hamburger-cross">
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav menu ml-auto dk_menu">
+                        <li class="nav-item active">
+                            <a href="@Url.Action("Index","Home")">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle" href="@Url.Action("Search","Home")">Finding a doctor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle" href="@Url.Action("Forum","Home")">Forum</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        @RenderBody()
+
+        <footer class="footer_area f_bg_color">
+            <img class="p_absolute leaf" src="~/Content/img/v.svg" alt="">
+            <img class="p_absolute f_man wow fadeInLeft" data-wow-delay="0.4s" src="~/Content/img/home_two/f_man.png" alt="">
+            <img class="p_absolute f_cloud" src="~/Content/img/home_two/cloud.png" alt="">
+            <img class="p_absolute f_email" src="~/Content/img/home_two/email-icon.png" alt="">
+            <img class="p_absolute f_email_two" src="~/Content/img/home_two/email-icon_two.png" alt="">
+            <img class="p_absolute f_man_two wow fadeInLeft" data-wow-delay="0.2s" src="~/Content/img/home_two/man.png" alt="">
+            <div class="footer_top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-6">
+                            <div class="f_widget subscribe_widget wow fadeInUp">
+                                <a href="@Url.Action("Index","Home")" class="f_logo"><img src="~/Content/img/logo.png?ver1" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border_bottom"></div>
+                </div>
+            </div>
+            <div class="footer_bottom text-center">
+                <div class="container">
+                    <p>© 2020 All Rights Reserved by <a href="@Url.Action("Index","Home")">DoctorClub</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Back to top button -->
+    <a id="back-to-top" title="Back to Top"></a>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Content/js/pre-loader.js"></script>
+    <script src="~/Content/assets/bootstrap/js/popper.min.js"></script>
+    <script src="~/Content/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/parallaxie.js"></script>
+    <script src="~/Content/js/TweenMax.min.js"></script>
+    <script src="~/Content/js/jquery.parallax-scroll.js"></script>
+    <script src="~/Content/assets/wow/wow.min.js"></script>
+    <script src="~/Content/assets/counterup/jquery.counterup.min.js"></script>
+    <script src="~/Content/assets/counterup/jquery.waypoints.min.js"></script>
+    <script src="~/Content/assets/select2-4.0.10/dist/js/select2.full.min.js"></script>
+    <script src="~/Content/assets/mcustomscrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Content/assets/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="~/Content/assets/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
+    <script src="~/Content/js/main.js"></script>
+    @RenderSection("scripts", required: false)
+
+    @if (ViewBag.message != null && ViewBag.message == "True")
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '<strong class="text-success">Success!</strong>',
+                text: 'A mail has been sent to your inbox. Please check your mailbox to activate your accountA mail has been sent to your inbox. Please check your mailbox to activate your account'
+            });
+        </script>
+    }
+</body>
+
+</html>

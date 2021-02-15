@@ -1,0 +1,122 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<DoctorClub.Models.DataModels.Specializations>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Backend/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-body table-responsive">
+        <div class="row">
+            <div class="col-md-6">
+                <b style="font-size:25px">Specializations Hindden</b>
+            </div>
+            <div class="col-md-6">
+                <form method="get" action="@Url.Action("IndexHindden","Specializations")" class="form-inline">
+                    <div class="form-group">
+                        <label for="exampleInputEmail2">Search : </label>
+                        @Html.TextBox("strSearching", ViewBag.CurrentFilter as string)
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Search</button>
+
+                </form>
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Specializations", new { id = item.Id })"><button class="btn btn-sm btn-primary">Edit</button></a>
+                        <button class="btn btn-sm btn-danger" onclick="delete_Specializations('@item.Id')">Delete</button>
+                        <button class="btn btn-sm btn-warning" onclick="unhinden_Specializations('@item.Id')">UnHindden</button>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount   @Html.PagedListPager(Model, pageno => Url.Action("IndexHindden", new { pageno, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>
+<script>
+    function delete_Specializations(id) {
+        Swal.fire({
+            title: 'Do you want to delete this Specializations ?',
+            text: "Permanently delete this Specializations and permanently lose data !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete Specializations !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Admin/Specializations/DeleteConfirmedHindden/' + id,
+                    success: function (data) {
+                        if (data) {
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'You have successfully deleted!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                        }
+                    }
+                });
+            }
+        });
+    }
+    function unhinden_Specializations(id) {
+        Swal.fire({
+            title: 'Do you want to unhidden this specializations ?',
+            text: "This specializations board and data remains the same !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, unhidden specializations !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Admin/Specializations/UnHindden/' + id,
+                    success: function (data) {
+                        if (data) {
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'You have successfully unhindden!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>

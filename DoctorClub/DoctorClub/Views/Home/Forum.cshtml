@@ -1,0 +1,136 @@
+﻿@model IEnumerable<DoctorClub.Models.DataModels.Categories>
+@{
+    ViewBag.Title = "Forum";
+    Layout = "~/Views/Shared/_LayoutForum.cshtml";
+    var latest = ViewBag.latest as DoctorClub.Models.DataModels.Posts;
+}
+
+<div class="row" style="padding-top: 50px;">
+    <div class="container-fluid">
+
+        <div class="answer-action">
+            <div class="action-content">
+                <div class="image-wrap">
+                    <img src="~/Content/img/home_support/answer.png" alt="answer action">
+                </div>
+
+                <div class="content">
+                    <h2 class="ans-title">Can’t find an answer?</h2>
+                    <p>
+                        Make use of a qualified tutor to get the answer
+                    </p>
+                </div>
+            </div>
+            <!-- /.action-content -->
+
+            <div class="action-button-container">
+                <a href="#" data-toggle="modal" data-target="#exampleModal2" class="action_btn btn-ans">Ask a Question</a>
+            </div>
+            <!-- /.action-button-container -->
+        </div>
+    </div>
+</div>
+
+<div class="box box-primary">
+    <div class="box-title p-2" style="background-color: #3c8dbc;color: #ffffff;">
+        <strong class="pl-3">Latest post </strong>
+    </div>
+    <div class="box-body">
+        <div class="community-post style-two feature docly spider richard">
+            <div class="post-content">
+                <div class="author-avatar">
+                    <img src="~/Content/Upload/@latest.User.Image" alt="community post">
+                </div>
+                <div class="entry-content">
+                    <h3 class="post-title">
+                        <a href="@Url.Action("Details","Posts",new { slug = latest.Slug})">
+                            @Html.DisplayFor(modelItem => latest.Title)
+                        </a>
+                    </h3>
+                    <ul class="meta">
+                        <li>
+                            @{
+                                var content = Html.Raw(HttpUtility.HtmlDecode(latest.Content));
+                            }
+                            <a href="@Url.Action("Details","Posts",new { slug = latest.Slug})">
+                                @System.Text.RegularExpressions.Regex.Replace(content.ToHtmlString(), "<.*?>", String.Empty).ToString().Substring(0, 49)
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="meta">
+                        <li>
+                            <i class="icon_pencil"></i>Posted: @Html.DisplayFor(modelItem => latest.Created)
+                        </li>
+                        <li>
+                            <i class="icon_calendar"></i>updated: @Html.DisplayFor(modelItem => latest.Updated)
+                        </li>
+                    </ul>
+                    <ul class="meta">
+                        <li>
+                            <i class="icon_tags"></i>Tags:
+                            @{
+                                var i = 0;
+                                foreach (var t in latest.PostTags)
+                                {
+                                    i++;
+                                    <a href="@Url.Action("Index","Tags",new { slug = t.Tag.Slug})">@t.Tag.Name</a>
+                                    if (i < latest.PostTags.Count())
+                                    {
+                                        <span style="margin-right: 2px;">,</span>
+                                    }
+                                }
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="post-meta-wrapper">
+                <ul class="post-meta-info">
+                    <li><a href="#"><i class="icon_chat_alt"></i>@latest.Comments.Count()</a></li>
+                    <li><a href="#"><i class="fa fa-eye"></i>@latest.Views</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.community-post style-two -->
+    </div>
+</div>
+
+    <div class="toggle_shortcode box-shadow p-3">
+        @foreach (var c in Model)
+        {
+            <a class="toggle_btn mt-1 collapsed" data-toggle="collapse" href="#@c.Slug" role="button" aria-expanded="false" aria-controls="@c.Slug">
+                <strong>@c.Name </strong>
+                <small>@c.description</small>
+            </a>
+            foreach (var sub in c.SubCategories)
+            {
+                <div class="collapse multi-collapse @(sub.CatId == Model.ElementAt(0).Id?"show":"")" id="@c.Slug">
+                    <div class="card card-body toggle_body">
+                        <div class="community-post style-two feature docly spider richard" style="background-color: none;">
+                            <div class="post-content">
+                                <div class="entry-content">
+                                    <h3 class="post-title">
+                                        <a href="@Url.Action("Index","Posts",new { slug = sub.Slug})">
+                                            @sub.Name
+                                        </a>
+                                    </h3>
+                                    <ul class="meta">
+                                        <li>
+                                            <a href="@Url.Action("Index","Posts",new { slug = sub.Slug})">
+                                                @Html.Raw(@sub.description)
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="post-meta-wrapper">
+                                <ul class="post-meta-info">
+                                    <li><a href="#"><i class="icon_book_alt"></i>@sub.Posts.Where(x => x.Status == true).Count()</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>

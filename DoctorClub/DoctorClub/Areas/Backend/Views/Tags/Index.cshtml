@@ -1,0 +1,96 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<DoctorClub.Models.DataModels.Tags>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Backend/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="panel panel-default">
+    <div class="panel-body table-responsive">
+        <div class="row">
+            <div class="col-md-6">
+                <b style="font-size:25px">All Tags</b>
+            </div>
+            <div class="col-md-6">
+                <form method="get" action="@Url.Action("Index","Tags")" class="form-inline">
+                    <div class="form-group">
+                        <label for="exampleInputEmail2">Search : </label>
+                        @Html.TextBox("strSearching", ViewBag.CurrentFilter as string)
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Search</button>
+                </form>
+            </div>
+        </div>
+        
+        <table class="table">
+            <tr>
+                <th>
+                    Name Tags
+                </th>
+                <th>
+                    Slug
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Slug)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit","Tags", new { id = item.id })"><button type="button" class="btn btn-sm btn-primary">Edit</button></a>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="delete_tags('@item.id')">Delete </button>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount   @Html.PagedListPager(Model, pageno => Url.Action("Index", new { pageno, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>
+<script>
+    function delete_tags(id) {
+        Swal.fire({
+            title: 'Do you want to delete this tag?',
+            text: "Permanently delete this tag and permanently lose data !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Admin/Tags/DeleteConfirmed/' + id,
+                    success: function (data) {
+                        if (data) {
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                            $("#" + id).modal("hide");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'You have successfully deleted!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+</script>

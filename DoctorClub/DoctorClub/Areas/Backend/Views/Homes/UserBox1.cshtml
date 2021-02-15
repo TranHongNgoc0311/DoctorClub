@@ -1,0 +1,26 @@
+﻿@model DoctorClub.Models.DataModels.Users
+
+<!-- User Account: style can be found in dropdown.less -->
+<li class="dropdown user user-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <img src="~/Content/Upload/@Model.Image" class="user-image" alt="User Image">
+        <span class="hidden-xs">@Model.Username</span>
+    </a>
+    <ul class="dropdown-menu">
+        <!-- User image -->
+        <li class="user-header">
+            <img src="~/Content/Upload/@Model.Image" class="img-circle" alt="User Image">
+
+            <p>
+                @Model.Username
+                <small>@Model.Name</small>
+            </p>
+        </li>
+        <!-- Menu Footer-->
+        <li class="user-footer">
+            <div class="pull-right">
+                <a href="@Url.Action("logout","Login")" class="btn btn-default btn-flat">Sign out</a>
+            </div>
+        </li>
+    </ul>
+</li>

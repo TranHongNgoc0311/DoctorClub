@@ -1,0 +1,37 @@
+﻿.form-control-comment {
+    height: 58px !important;
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 18px;
+    border-radius: 0px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-right: 0;
+    padding-left: 0;
+}
+.useful-box {
+    position: absolute;
+    top: 65px;
+    margin: 0;
+    padding: 0;
+    width: 50px;
+}
+@media (max-width: 780px) {
+    .useful-box {
+        position: absolute;
+        top: 55px;
+        margin: 0;
+        padding: 0;
+        width: 40px;
+    }
+}
+.action-button-container a:not([href]):not([tabindex]) {
+    color: initial;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.btn_active{
+    background-color: #0094ff!important;
+}

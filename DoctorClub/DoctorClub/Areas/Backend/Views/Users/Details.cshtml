@@ -1,0 +1,198 @@
+﻿@model DoctorClub.Models.DataModels.Users
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Backend/Views/Shared/_Layout.cshtml";
+}
+
+
+@*------------------------------------------------------*@
+<section class="content">
+    <div class="row">
+        <div class="col-md-3">
+
+            <!-- Profile Image -->
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle" src="~/Content/Upload/@Html.DisplayFor(model => model.Image)" alt="User profile picture">
+
+                    <h3 class="profile-username text-center">@Html.DisplayFor(model => model.Name)</h3>
+
+                    <p class="text-muted text-center">@Html.DisplayFor(model => model.Username)</p>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Phone Number</b> <a class="pull-right">@Html.DisplayFor(model => model.Phone)</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Email</b> <span class="pull-right">@Html.DisplayFor(model => model.Email)</span>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Birthday</b> <span class="pull-right">@Html.DisplayFor(model => model.Birthday)</span>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Active Points</b> <a class="pull-right">@Html.DisplayFor(model => model.ActivePoints)</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Day Created</b> <a class="pull-right">@Html.DisplayFor(model => model.Created)</a>
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <Button onclick="ban_users('@Html.DisplayFor(model => model.Id)')" class="btn btn-danger btn-warning"><b>Ban User</b></Button>
+                        </div>
+                        <div class="col-md-6">
+                            @if (Model.Level==1 && Model.AccStatus!=1)
+                            {
+                            <button class="btn  btn-success" onclick="SetAdmin_users('@Html.DisplayFor(model => model.Id)')">SetAdmin</button>
+                            }
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+            <!-- About Me Box -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">About Me</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <strong><i class="fa fa-map-marker margin-r-5 "></i> Address</strong>
+
+                    <p class="text-muted">
+                        @Html.DisplayFor(model => model.Address)
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="fa fa-book margin-r-5"></i> Awards</strong>
+
+                    <p class="text-muted">@Html.DisplayFor(model => model.Awards)</p>
+
+                    <hr>
+
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Introdution</strong>
+
+                    <p>@Html.DisplayFor(model => model.Introdution) </p>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#activity" data-toggle="tab">All Post</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="activity">
+                        <!-- Post -->
+                        @foreach (var  item in Model.Posts)
+                        {
+                        <div class="post">
+                            <div class="user-block">
+                                <img class="img-circle img-bordered-sm" src="~/Content/Upload/@Model.Image" alt="user image">
+                                <span class="username">
+                                    <a href="#"> @Model.Name</a>
+                                    <a href="@Url.Action("Details","Posts",new { id=item.Id})" class="pull-right btn-box-tool"><i class="fa fa-location-arrow"></i></a>
+                                </span>
+                                <span class="description">@item.Created</span>
+                            </div>
+                            <br />
+                            <!-- /.user-block -->
+                            <p>
+                                @Html.Raw(HttpUtility.HtmlDecode(item.Content))
+                            </p>
+                            <br />
+                            
+                        </div>
+                            <!-- /.post -->
+                        }
+
+
+                    </div>
+                   
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+</section>
+@*-------------------------------------------*@
+<script>
+        function ban_users(id) {
+            Swal.fire({
+                title: 'Do you want to ban this user?',
+                text: "This user board and data remains the same !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, ban user !'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'get',
+                        url: '/Admin/Users/Ban/' + id,
+                        success: function (data) {
+                            if (data) {
+                                setTimeout(function () {
+                                    window.location.href = "/Admin/Users/Index";
+                                }, 1500);
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'You have successfully ban!',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                               
+                            }
+                        }
+                    });
+                }
+            });
+    }
+    function SetAdmin_users(id) {
+        Swal.fire({
+            title: 'Do you want set this user to admin?',
+            text: "This user has administrator rights to this forum !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, set admin !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Admin/Users/SetAdmin/' + id,
+                    success: function (data) {
+                        if (data) {
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'You have successfully set admin!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>

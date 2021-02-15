@@ -1,0 +1,21 @@
+﻿.doc_banner_area_two {
+    height: 450px;
+}
+
+.panel {
+    color: #28313F;
+    margin-bottom: 15px;
+    padding: 15px;
+}
+
+.bg-1 {
+    background-color: #F9F9F9;
+}
+
+.fs-14px {
+    font-size: 14px;
+}
+
+.categories_guide_item {
+    background: rgba(255, 214, 214,0.8);
+}

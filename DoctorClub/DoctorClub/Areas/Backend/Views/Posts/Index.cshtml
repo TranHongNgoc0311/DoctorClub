@@ -1,0 +1,188 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<DoctorClub.Models.DataModels.Posts>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Backend/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-body table-responsive">
+        <div class="row">
+            <div class="col-md-6">
+                <b style="font-size:25px">Posts Actived</b>
+            </div>
+            <div class="col-md-6">
+                <form method="get" action="@Url.Action("Index","Posts")" class="form-inline">
+                    <div class="form-group">
+                        <label for="exampleInputEmail2">Search : </label>
+                        @Html.TextBox("strSearching", ViewBag.CurrentFilter as string)
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("dropSearchingId", "---SubCategories---")
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary">Search</button>
+
+                </form>
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <th>
+                    Name Category
+                </th>
+                <th>
+                    User Name
+                </th>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Created
+                </th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubCategories.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Created)
+                    </td>
+
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#@item.Id">
+                            Details
+                        </button>
+                        <button type="button" class="btn btn-sm btn-danger" onclick="delete_post('@item.Id')">Delete </button>
+                        <button type="button" class="btn btn-sm btn-warning" onclick="hidden_post('@item.Id')">Hide</button>
+                        @if (item.Comments.Count() > 0)
+                        {
+                            <a class="btn btn-sm btn-info" href="@Url.Action("Comments","Posts", new { postId = item.Id})">Comments</a>
+                        }
+                    </td>
+                </tr>
+                <!-- Modal -->
+                <div class="modal fade" id="@item.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel"> <b>Title:</b> @item.Title</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="post">
+                                    <div class="user-block">
+                                        <img class="img-circle img-bordered-sm" src="~/Content/Upload/@item.User.Image" alt="user image">
+                                        <span class="username">
+                                            <a href="@Url.Action("Details","Users",new { id=item.User.Id })"> @item.User.Name</a>
+                                        </span>
+                                        <span class="description">@item.Created</span>
+                                    </div>
+                                    <br />
+                                    <!-- /.user-block -->
+                                    <p>
+                                        @Html.Raw(HttpUtility.HtmlDecode(item.Content))
+                                    </p>
+
+                                </div>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="delete_post('@item.Id')">Delete Post</button>
+                                <button type="button" class="btn btn-sm btn-warning" onclick="hidden_post('@item.Id')">Hide Post</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+
+        </table>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount   @Html.PagedListPager(Model, pageno => Url.Action("Index", new { pageno, currentFilter = ViewBag.CurrentFilter, CurrentDrop = ViewBag.CurrentDrop }))
+    </div>
+</div>
+<script>
+    function delete_post(id) {
+        Swal.fire({
+            title: 'Do you want to delete this post?',
+            text: "Permanently delete this post and permanently lose data !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Admin/Posts/DeleteConfirmed/' + id,
+                    success: function (data) {
+                        if (data) {
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                            $("#" + id).modal("hide");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'You have successfully deleted!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+                    }
+                });
+            }
+        });
+    }
+    function hidden_post(id) {
+        Swal.fire({
+            title: 'Do you want to hiden this post?',
+            text: "Hiden this post !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, hiden it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'get',
+                    url: '/Admin/Posts/Hidden/' + id,
+                    success: function (data) {
+                        if (data) {
+
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500);
+                            $("#" + id).modal("hide");
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'You have successfully Hidden!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>

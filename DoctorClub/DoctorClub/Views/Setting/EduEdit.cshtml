@@ -1,0 +1,84 @@
+﻿@model DoctorClub.Models.DataModels.UserAcademies
+
+@{
+    ViewBag.Title = "Edit education information";
+    Layout = "~/Views/Shared/_LayoutForum.cshtml";
+    var academies = ViewBag.academy as IEnumerable<DoctorClub.Models.DataModels.Academies>;
+}
+
+<div class="container sec_pad">
+    <div class="box box-primary box-shadow">
+        <div class="box-body box-profile">
+            @using (Html.BeginForm("EduEdit", "Setting", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.id" />
+                <div class="form-group">
+                    <select name="ac" class="form-control select2_ac" required="required">
+                        @foreach (var ac in academies)
+                        {
+                            <option value="@ac.Name" @(ac.Id == Model.AId ? "selected" : "")>@ac.Name</option>
+                        }
+                    </select>
+                    @Html.ValidationMessageFor(model => model.AId, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="number" class="form-control" name="From" value="@Model.From" placeholder="From year ...">
+                                @Html.ValidationMessageFor(model => model.From, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="number" class="form-control" name="to" value="@Model.To" placeholder="To year ...">
+                                @Html.ValidationMessageFor(model => model.To, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-search-form" style="margin-bottom: 5px;">
+                        <input type="file" name="image" onchange="imgPreview(this)" hidden id="Image" accept="image/x-png,image/gif,image/jpeg,image/jpg" />
+                        <input type="text" readonly />
+                        <label for="Image">
+                            <i class="icon_image"></i>
+                        </label>
+                    </div>
+                    @if (Model.Image != null)
+                    {
+                        <img src="~/Content/Upload/" +@Model.Image" id="img_preview" alt="image" class="img-thumbnail" style="min-width: 100px;max-width: 100%;margin: auto; padding: auto; display: block">
+                    }
+                </div>
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group text-center">
+                    <button class="nav_btn icon_btn arrow_btn_small_two">
+                        <i class="icon_documents_alt"></i>
+                        @(Model.id != null? "Update now":"Add now")
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        function imgPreview(input) {
+            if (input.files && input.files[0]) {
+                var file = new FileReader();
+                file.onload = function (img) {
+                    $('#img_preview').attr('src', img.target.result);
+                };
+                file.readAsDataURL(input.files[0]);
+            }
+        }
+        $('.select2_ac').select2({
+            tags: true,
+            width: "100%",
+            placeholder: "Enter your university"
+        });
+    </script>
+}

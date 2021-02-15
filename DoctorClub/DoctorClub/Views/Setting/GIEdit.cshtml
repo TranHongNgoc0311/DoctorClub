@@ -1,0 +1,100 @@
+﻿@model DoctorClub.Models.DataModels.Users
+
+@{
+    ViewBag.Title = "Edit general information";
+    Layout = "~/Views/Shared/_LayoutForum.cshtml";
+
+    var data = "";
+    var title = "";
+    switch (ViewBag.type)
+    {
+        case 1:
+            data = Model.Name;
+            title = "Name";
+            break;
+        case 2:
+            data = Model.Username;
+            title = "Username";
+            break;
+        case 3:
+            data = Model.Birthday.ToString("yyyy-MM-dd");
+            title = "Birthday";
+            break;
+        case 4:
+            data = Model.Email;
+            title = "Email";
+            break;
+        case 5:
+            data = Model.Phone;
+            title = "Phone";
+            break;
+        case 6:
+            data = Model.Address;
+            title = "Address";
+            break;
+        case 7:
+            data = Model.Introdution;
+            title = "Introdution";
+            break;
+        default:
+            data = Model.Image;
+            title = "Avatar";
+            break;
+    }
+}
+
+<div class="container-fluid sec_pad">
+    <div class="panel box-shadow" style="background: rgba(255, 255, 255,0.5);padding: 20px;">
+        <h5>Change your @title</h5>
+        <br />
+        @using (Html.BeginForm("GIEdit", "Setting", FormMethod.Post, new { @class = "contact_form", @enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="type" value="@ViewBag.type" />
+            <div class="form-group">
+                @{
+                    if (ViewBag.type == 7)
+                    {
+                        <textarea name="data" style="min-height: 300px;" placeholder="Massage">@data</textarea>
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    }
+                    else if (ViewBag.type == 8)
+                    {
+                        <div class="form-group">
+                            <div class="input-search-form" style="margin-bottom: 5px;">
+                                <input type="file" name="file" onchange="imgPreview(this)" hidden id="Image" accept="image/x-png,image/gif,image/jpeg,image/jpg" />
+                                <input type="text" readonly />
+                                <label for="Image">
+                                    <i class="icon_image"></i>
+                                </label>
+                            </div>
+                            <img src="~/Content/Upload/@data" id="img_preview" alt="avatar" class="img-thumbnail" style="min-width: 100px;max-width: 100%;margin: auto; padding: auto; display: block">
+                        </div>
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    }
+                    else
+                    {
+                        <input type="@(ViewBag.type == 3?"date":"text")" name="data" class="form-control" value="@data">
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                    }
+                }
+            </div>
+            <div class="form-group text-center">
+                <button class="nav_btn icon_btn arrow_btn_small_two"><i class="icon_documents_alt"></i>Update now</button>
+            </div>
+        }
+    </div>
+</div>
+@section scripts{
+    <script>
+        function imgPreview(input) {
+            if (input.files && input.files[0]) {
+                var file = new FileReader();
+                file.onload = function (img) {
+                    $('#img_preview').attr('src', img.target.result);
+                };
+                file.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    }

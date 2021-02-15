@@ -1,0 +1,190 @@
+﻿@model DoctorClub.Models.DataModels.Users
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_LayoutForum.cshtml";
+}
+
+<!-- Forum post top area -->
+    <div style="margin-top: 30px;">
+        <div class="box box-primary">
+            <div class="box-body box-profile">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td rowspan="4">
+                                <img class="profile-user-img img-circle" src="~/Content/Upload/@Model.Image">
+                            </td>
+                            <td>
+                                <b>Username: </b><i class="profile-username" style="font-size: 14px;">@Model.Username</i>
+                            </td>
+                            <td>
+                                <b>Name: </b><i class="text-muted" style="font-size: 14px;">@Model.Name</i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Birthday: </b><i>@Model.Birthday.ToString("MM/dd/yyyy")</i>
+                            </td>
+                            <td class="highlight_text">
+                                <b>Reputation(Active points):</b><span class="h_green">@Model.ActivePoints</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Phone: </b><i style="font-size: 14px;">@Model.Phone</i>
+                            </td>
+                            <td>
+                                <b>Email: </b><i style="font-size: 14px;">@Model.Email</i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <b>Address: </b><i>@Model.Address</i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab_shortcode">
+            <div id="accordion">
+                <div class="card doc_accordion">
+                    <div class="card-header" id="headingDetails">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#introdution" aria-expanded="true" aria-controls="introdution">
+                                Introdution<i class="icon_plus"></i><i class="icon_minus-06"></i>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="introdution" class="collapse show" aria-labelledby="headingDetails" data-parent="#accordion">
+                        <div class="card-body toggle_body">
+                            <blockquote>
+                                <h4 class="c_head text-muted">
+                                    @Model.Introdution
+                                </h4>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+                <div class="card doc_accordion">
+                    <div class="card-header" id="headingContaxt">
+                        <h5 class="mb-0">
+                        </h5>
+                    </div>
+                    <div id="contaxt" class="collapse" aria-labelledby="headingContaxt" data-parent="#accordion">
+                        <div class="card-body toggle_body">
+                            <div class="widget ticket_widget">
+                                <div class="box-body">
+                                    <strong><i class="fa fa-phone margin-r-5 text-success"></i> Phone number</strong>
+
+                                    <p class="text-muted">
+                                        @Model.Phone
+                                    </p>
+
+                                    <hr>
+
+                                    <strong><i class="fa fa-map-marker margin-r-5 text-primary"></i> Address</strong>
+
+                                    <p class="text-muted">@Model.Address</p>
+
+                                    <hr>
+
+                                    <strong><i class="fa fa-envelope margin-r-5 text-danger"></i> Email</strong>
+
+                                    <p class="text-muted">@Model.Email</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card doc_accordion">
+                    <div class="card-header" id="headingEducation">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#eduction" aria-expanded="false" aria-controls="eduction">
+                                Education<i class="icon_plus"></i><i class="icon_minus-06"></i>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="eduction" class="collapse" aria-labelledby="headingEducation" data-parent="#accordion">
+                        <div class="card-body toggle_body">
+                            @foreach (var a in Model.UserAcademies)
+                            {
+                                <div class="row" style="border-bottom: 1px solid black;padding: 10px 0;">
+                                    <div class="col-md-9 font-14">
+                                        <p>@a.Academy.Name</p>
+                                        <p>From: @a.From - to: @a.To</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <a href="~/Content/Upload/@a.Image" target="_blank">
+                                            <img src="~/Content/Upload/@a.Image" style="width:100px;" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card doc_accordion">
+                    <div class="card-header" id="headingAwands">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#Awards" aria-expanded="false" aria-controls="Awards">
+                                Awards <i class="icon_plus"></i><i class="icon_minus-06"></i>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="Awards" class="collapse" aria-labelledby="headingAwands" data-parent="#accordion">
+                        <div class="card-body toggle_body toggle_item">
+                            <ul class="list-group text-14">
+                                @{
+                                    if (Model.Awards != null)
+                                    {
+                                        var award = Model.Awards.Split(',').ToList();
+                                        foreach (var aw in award)
+                                        {
+                                            <li class="list-group-item text-muted">@aw</li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card doc_accordion">
+                    <div class="card-header" id="headingExperience">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#Experience" aria-expanded="false" aria-controls="Experience">
+                                Experience <i class="icon_plus"></i><i class="icon_minus-06"></i>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="Experience" class="collapse" aria-labelledby="headingExperience" data-parent="#accordion">
+                        <div class="card-body toggle_body toggle_item">
+                            <table class="table table-striped font-14">
+                                <tbody>
+                                    @foreach (var exp in Model.UserSpecializations)
+                                    {
+                                        <tr>
+                                            <th>@exp.Specialization.Name</th>
+                                            <th>@exp.position</th>
+                                            <td>@exp.From - @exp.To</td>
+                                            <td>@exp.Place</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@section scripts{
+    <script>
+        function getLightbox(img) {
+            $('#modalImage').modal('show');
+            $('#lightboxImage').attr('src', img);
+        }
+    </script>
+    }
